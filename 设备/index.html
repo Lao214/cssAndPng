@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *, *:before, *:after {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background: #FFF;
+            font-size: 14px;
+        }
+
+        .device, .device *, .device *:after, .device *:before {
+            backface-visibility: hidden;
+        }
+
+        .device {
+            border: 2px solid #333;
+            background: #FFF;
+            border-radius: 25px;
+            box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.05);
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .device__header {
+            position: absolute;
+            top: 22.5px;
+            left: 50%;
+            margin-left: -15px;
+            width: 30px;
+            height: 3px;
+            background: #333;
+            border-radius: 1.5px;
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .device__header:after, .device__header:before {
+            position: absolute;
+            content: "";
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .device__header:before {
+            top: -0.5px;
+            left: -9px;
+            width: 4px;
+            height: 4px;
+            border-radius: 2px;
+            border: 1px solid #333;
+            background: #333;
+        }
+
+        .device__header:after {
+            top: -12.5px;
+            left: 50%;
+            margin-left: -3px;
+            width: 6px;
+            height: 6px;
+            border-radius: 3px;
+            border: 1px solid #333;
+            background: #333;
+        }
+
+        .device__content {
+            width: 160px;
+            height: 284px;
+            background: #FFF;
+            border: 1px solid #333;
+            border-radius: 1.5px;
+            margin: 40px 7.5px 40px 7.5px;
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .device__footer {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            margin-left: -15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .device__footer:after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -5px;
+            margin-top: -5px;
+            width: 10px;
+            height: 10px;
+            border: 1px solid #333;
+            border-radius: 2.5px;
+            transition: all 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /**
+        * iPad and iPad Mini
+        */
+        .device--ipad .device__header,
+        .device--ipad-mini .device__header {
+            width: 0;
+            margin-left: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .device--ipad .device__header:before,
+        .device--ipad-mini .device__header:before {
+            transform: scale(0);
+        }
+
+        .device--ipad .device__header:after,
+        .device--ipad-mini .device__header:after {
+            transform: translate(0, 7.5px);
+        }
+
+        .device--ipad .device__content {
+            width: 384px;
+            height: 512px;
+            margin: 40px;
+        }
+
+        .device--ipad-mini .device__content {
+            width: 384px;
+            height: 512px;
+            margin: 40px 12.5px;
+        }
+
+        /**
+        * Browser
+        */
+        .device--browser {
+            border-radius: 4px;
+            border-bottom-right-radius: 2px;
+            border-bottom-left-radius: 2px;
+        }
+
+        .device--browser .device__header,
+        .device--browser .device__header:after,
+        .device--browser .device__header:before {
+            width: 7px;
+            height: 7px;
+            left: 5px;
+            top: 0px;
+            transform: translate(0px, 0px) scale(1);
+            margin-left: 0px;
+            border-radius: 4px;
+            background: transparent;
+            border: 1px solid #333;
+        }
+
+        .device--browser .device__header {
+            top: 6px;
+        }
+
+        .device--browser .device__header:before {
+            left: 9px;
+            top: -1px;
+        }
+
+        .device--browser .device__header:after {
+            left: 19px;
+            top: -1px;
+        }
+
+        .device--browser .device__content {
+            width: 640px;
+            height: 400px;
+            border-right-width: 0px;
+            border-left-width: 0px;
+            border-bottom-width: 0px;
+            border-radius: 0px;
+            border-bottom-right-radius: 2px;
+            border-bottom-left-radius: 2px;
+            margin: 20px 0px 0px 0px;
+        }
+
+        .device--browser .device__footer {
+            transform: scale(0);
+        }
+
+        /**
+        * Container to align the device in the center/middle
+        * of the screen. I could use translate() for it, but
+        * depending on the size of the window, the lines would
+        * look blurred.
+        */
+        .container {
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            text-align: center;
+            background: #AAEC57;
+            transition: background 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .container:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+        .container > div {
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .container--ipad-mini {
+            background: #67C4FF;
+        }
+
+        .container--ipad {
+            background: #FEEC5D;
+        }
+
+        .container--browser {
+            background: #F88482;
+        }
+
+        .nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            text-align: left;
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 10px;
+        }
+        .nav li {
+            display: inline-block;
+            margin-right: 10px;
+            color: rgba(0, 0, 0, 0.4);
+        }
+        .nav .credits {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .nav .credits a {
+            border-bottom-width: 1px;
+        }
+        .nav a {
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s ease-out;
+        }
+        .nav a:hover {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="device">
+          <div class="device__header"></div>
+          <div class="device__content">
+          </div>
+          <div class="device__footer"></div>
+        </div>
+    </div>
+      
+    <ul class="nav">
+        <li><a href="#" data-device="">iPhone 5</a></li>
+        <li><a href="#" data-device="ipad-mini">iPad Mini</a></li>
+        <li><a href="#" data-device="ipad">iPad</a></li>
+        <li><a href="#" data-device="browser">Browser</a></li>
+        <li class="credits">Made with ❤ by <a href="http://lucasmotta.com">Lucas Motta</a>
+    </ul>
+
+
+    <!-- 引入jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+  
+        function setDevice(device) {
+            deviceNs = device ? "device--" + device : "";
+            containerNs = device ? "container--" + device : "";
+            $(".device").removeClass().addClass("device " + deviceNs);
+            $(".container").removeClass().addClass("container " + containerNs);
+        };
+        
+        $(".nav").on("click", "a", function(e) {
+            e.preventDefault();
+            setDevice($(e.target).data("device"));
+        });
+        
+        $(window).on("keyup", function(e) {
+            switch(e.keyCode) {
+            case 49 :
+                setDevice();
+                break;
+            case 50 :
+                setDevice("ipad-mini");
+                break;
+            case 51 :
+                setDevice("ipad");
+                break;
+            case 52 :
+                setDevice("browser");
+                break;
+            }
+        });
+        
+        });
+
+    </script>
+</body>
+</html>
