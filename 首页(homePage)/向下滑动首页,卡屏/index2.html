@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,700italic,800);
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        header ul {
+            list-style: none;
+            text-align: center;
+        }
+        header ul li {
+            display: inline-block;
+            height: 50px;
+            width: 80px;
+            text-align: center;
+            font-family: "open sans";
+            line-height: 48px;
+            padding: 0 20px 0 20px;
+        }
+        header ul li:hover {
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+        header ul li.current {
+            background-color: black;
+            color: white;
+        }
+
+        #slides {
+            height: calc(100% - 100px);
+            width: 100%;
+        }
+        #slides nav {
+            font-size: 100px;
+            position: absolute;
+            left: 47%;
+            top: 70%;
+            color: white;
+            z-index: 100;
+        }
+        #slides nav i {
+            cursor: pointer;
+            opacity: 0.2;
+            transition: all 0.5s;
+        }
+
+        #slides .slide {
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+            font-family: "open sans";
+            color: white;
+            text-align: center;
+        }
+
+        #slides .slide h1 {
+            font-size: 50px;
+            font-weight: 500;
+            padding-top: 20px;
+        }
+
+        #slides .slide0 {
+            background: #FF3709;
+            position: relative;
+        }
+        #slides .slide0 #title {
+            position: relative;
+            top: 24%;
+        }
+        #slides .slide0 #title h1 {
+            text-align: center;
+            color: white;
+            font-size: 100px;
+            font-family: "Open sans";
+            padding: 10px;
+            font-weight: 500;
+            padding-top: 0;
+        }
+        #slides .slide0 #title h2 {
+            text-align: center;
+            color: white;
+            font-size: 50px;
+            font-family: "Open sans";
+            font-weight: 100;
+        }
+        #slides .slide1 {
+            display: none;
+            background-color: #00ADD5;
+        }
+        #slides .slide1 p {
+            padding: 20px;
+            font-size: 20px;
+            line-height: 40px;
+        }
+        #slides .slide2 {
+            display: none;
+            background-color: #22D6FF;
+        }
+        #slides .slide2 h2 {
+            font-size: 20px;
+            margin-top: 15px;
+            font-weight: 100;
+        }
+        #slides .slide2 #canvas {
+            background: black;
+            margin: 0;
+            float: left;
+            margin-left: 20px;
+        }
+        #slides .slide2 img {
+            float: right;
+            margin-right: 20px;
+            width: 500px;
+            height: 400px;
+        }
+        #slides .slide3 {
+            display: none;
+            background-color: #FF4C22;
+        }
+        #slides .slide3 h2 {
+            padding-top: 20px;
+        }
+        #slides .slide3 ul {
+            list-style: none;
+            padding-top: 50px;
+        }
+        #slides .slide3 ul a {
+            color: white;
+            text-decoration: none;
+        }
+        #slides .slide3 li {
+            font-size: 40px;
+            font-weight: 100;
+            padding: 10px;
+            margin: 10px auto;
+            border: 1px solid white;
+            border-radius: 10px;
+            width: 300px;
+        }
+        #slides .slide3 li:hover {
+            background-color: rgba(201, 201, 201, 0.1);
+        }
+
+        footer {
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            font-family: "open sans";
+            line-height: 48px;
+        }
+        footer #links {
+            float: right;
+            font-size: 30px;
+            margin-right: 20px;
+        }
+        footer #links a {
+            color: #000000;
+        }
+        footer #links i {
+            opacity: 0.3;
+        }
+        footer #links i:hover {
+            opacity: 1;
+        }
+        footer p {
+            float: left;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <header>
+        <ul>
+            <li class="current menu0">HOME</li>
+            <li class="menu1">ABOUT</li>
+            <li class="menu2">PROJECTS</li>
+            <li class="menu3">CONTACT</li>
+        </ul>
+    </header>
+
+    <div id="slides">
+    <nav>
+        <i class="fa fa-chevron-circle-down" id="next"></i>
+    </nav>
+
+        <div class="slide slide0">
+            <div id="title">
+                <h2>Hello, I am</h2>
+                <h1>Leon</h1>
+                <h2>And I'm a Web Developer</h2>
+            </div>
+        </div>
+    
+        <div class="slide slide1">
+            <h1>About</h1>
+
+                        
+        </div>
+                
+        <div class="slide slide2">
+                <h1>Projects</h1>
+                <h2>A few things I made:</h2>
+        </div>
+                
+        <div class="slide slide3">
+            <h1>Contact</h1>
+            <h2>You can find me on the internet here:</h2>   
+            <ul>
+                <a href="mailto:leongrasmeijer@gmail.com"><li>
+                    <i class="fa fa-envelope"></i> Mail
+                </li></a>
+                <a href="https://codepen.io/LeonGr/"><li>
+                    <i class="fa fa-codepen"></i> Codepen
+                </li></a>
+                <a href="https://github.com/LeonGr"><li>
+                    <i class="fa fa-github"></i> Github
+                </li></a>
+            </ul>
+        </div>
+    </div>
+    <footer>
+    <p class="copy">Leon Grasmeijer &copy; 2014</p>
+
+        <div id="links">
+        <a href="mailto:leongrasmeijer@gmail.com"><i class="fa fa-envelope"></i></a>
+        <a href="https://codepen.io/LeonGr/"><i class="fa fa-codepen"></i></a>
+        <a href="https://github.com/LeonGr"><i class="fa fa-github"></i></a>
+        </div>
+    </footer>
+
+    <!-- 引入jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        var number = 0;
+        $("#next").click(function(){
+            $(".slide" + number).slideUp();
+            $(".menu" + number).removeClass('current');
+            $(".slide" + (number + 1)).slideDown();
+            $(".menu" + (number + 1)).addClass('current');
+
+            if (number === 2){
+                $("#next").css('transform', 'rotate(180deg)');
+            }
+
+            if (number === 3){
+                $(".slide3").slideUp();
+                $(".menu3").removeClass('current');
+                $(".slide0").slideDown();
+                $(".menu0").addClass('current');
+                $("#next").css('transform', 'rotate(0deg)');
+
+                number = -1;
+            }
+
+            number += 1;
+        })
+
+        $(".menu0").click(function() {
+            $(".slide" + number).slideUp();
+            $(".menu" + number).removeClass('current');
+            $(".menu0").addClass('current');
+            $(".slide0").slideDown();
+
+            number = 0;
+
+            $("#next").css('transform', 'rotate(0deg)');
+        })
+
+        $(".menu1").click(function() {
+            $(".slide" + number).slideUp();
+            $(".menu" + number).removeClass('current');
+            $(".menu1").addClass('current');
+            $(".slide1").slideDown();
+
+            number = 1;
+
+            $("#next").css('transform', 'rotate(0deg)');
+        })
+
+        $(".menu2").click(function() {
+            $(".slide" + number).slideUp();
+            $(".menu" + number).removeClass('current');
+            $(".menu2").addClass('current');
+            $(".slide2").slideDown();
+
+            number = 2;
+
+            $("#next").css('transform', 'rotate(0deg)');
+        })
+
+        $(".menu3").click(function() {
+            $(".slide" + number).slideUp();
+            $(".menu" + number).removeClass('current');
+            $(".menu3").addClass('current');
+            $(".slide3").slideDown();
+
+            number = 3;
+
+            $("#next").css('transform', 'rotate(180deg)');
+        })
+    })
+    </script>
+</body>
+</html>
