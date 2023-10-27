@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import 'https://fonts.googleapis.com/css?family=Montserrat';
+        @font-face {
+        font-family: Narziss;
+        src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/Narziss_Bold_Drops.woff2);
+        }
+        @font-face {
+        font-family: Narziss-medium;
+        src: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/Narziss_Bold_Drops.woff2);
+        }
+        *, *::after, *::before {
+        box-sizing: border-box;
+        }
+
+        body, html {
+        background: transparent;
+        font-size: 6px;
+        padding: 4rem 2rem;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family: "Montserrat", sans-serif;
+        }
+        @media (min-width: 860px) {
+        body, html {
+            font-size: 8px;
+            padding: 3rem 5rem;
+        }
+        }
+        @media (min-width: 1200px) {
+        body, html {
+            font-size: 10px;
+            padding: 2rem 3rem;
+        }
+        }
+
+        .header-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 2rem 3rem 2rem;
+        z-index: 999;
+        }
+        .header-wrapper .header {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 6rem;
+        }
+        .header-wrapper .menu-wrapper {
+        position: relative;
+        float: left;
+        display: block;
+        cursor: pointer;
+        width: 2.5rem;
+        height: 3rem;
+        right: 0;
+        margin: 0;
+        text-align: left;
+        }
+        .header-wrapper .menu-wrapper:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .header-wrapper .menu-hamburger {
+        position: relative;
+        width: 1.4rem;
+        display: inline-block;
+        vertical-align: middle;
+        background: white;
+        height: 1px;
+        cursor: pointer;
+        right: 0;
+        top: 1rem;
+        }
+        .header-wrapper .menu-hamburger::before {
+        content: "";
+        width: 2.5rem;
+        height: 1px;
+        background: white;
+        position: absolute;
+        top: -0.8rem;
+        left: 0;
+        }
+        .header-wrapper .menu-hamburger::after {
+        content: "";
+        width: 2rem;
+        height: 1px;
+        background: white;
+        position: absolute;
+        top: 0.8rem;
+        left: 0;
+        }
+        .header-wrapper .nav-wrapper {
+        position: relative;
+        float: right;
+        }
+        .header-wrapper nav {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: bold;
+        line-height: 1;
+        font-weight: 700;
+        color: white;
+        }
+        .header-wrapper nav ul {
+        padding: 0;
+        display: block;
+        list-style: none;
+        }
+        .header-wrapper nav ul:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .header-wrapper nav li {
+        float: left;
+        margin: 0 1.2rem;
+        }
+        .header-wrapper nav li:last-child {
+        margin-left: 0;
+        }
+
+        .lines-wrapper {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        pointer-events: none;
+        }
+        .lines-wrapper span.vertical {
+        position: absolute;
+        height: 1px;
+        width: 100%;
+        background: white;
+        top: 12%;
+        left: 0;
+        z-index: 1;
+        opacity: 0.05;
+        }
+        .lines-wrapper .croses span {
+        color: white;
+        font-size: 1rem;
+        position: absolute;
+        top: 11%;
+        left: calc(20% - 2px);
+        }
+        .lines-wrapper .croses span:nth-child(2) {
+        left: calc(40% - 2px);
+        }
+        .lines-wrapper .croses span:nth-child(3) {
+        left: calc(60% - 2px);
+        }
+        .lines-wrapper .croses span:nth-child(4) {
+        left: calc(80% - 2px);
+        }
+        .lines-wrapper span.horizontal {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        background: white;
+        z-index: 1;
+        left: 20%;
+        opacity: 0.05;
+        }
+        .lines-wrapper span.horizontal:nth-child(2) {
+        left: 40%;
+        }
+        .lines-wrapper span.horizontal:nth-child(3) {
+        left: 60%;
+        }
+        .lines-wrapper span.horizontal:nth-child(4) {
+        left: 80%;
+        }
+
+        .slider-content {
+        position: relative;
+        max-width: 112rem;
+        min-width: 480px;
+        background: #fff;
+        margin: 0 auto;
+        }
+        .slider-content .slider-container {
+        position: relative;
+        height: 70rem;
+        }
+        .slider-content .slide-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        }
+        .slider-content .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-blend-mode: multiply;
+        background-size: auto 125%;
+        background-position: 0px -45px;
+        background-repeat: no-repeat;
+        opacity: 0;
+        }
+        .slider-content .slide:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .slider-content .slide.active {
+        opacity: 1;
+        z-index: 50;
+        }
+        .slider-content .slide.next {
+        opacity: 1;
+        }
+        .slider-content .slide.red {
+        background-color: #EE4654;
+        }
+        .slider-content .slide.blue {
+        background-color: #6989E0;
+        }
+        .slider-content .slide.green {
+        background-color: #6cd779;
+        }
+        .slider-content .slide.grey {
+        background-color: #bcbcbc;
+        }
+        .slider-content .canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        }
+        .slider-content .fake-bg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-blend-mode: multiply;
+        background-size: auto 125%;
+        background-position: 0px -45px;
+        background-repeat: no-repeat;
+        }
+        .slider-content .fake-bg.red {
+        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/karlie-kloss.png);
+        background-color: #EE4654;
+        }
+        .slider-content .fake-bg.blue {
+        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/aline-weber_copy.png);
+        background-color: #6989E0;
+        }
+        .slider-content .fake-bg.green {
+        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/miranda-kerr.png);
+        background-color: #6cd779;
+        }
+        .slider-content .fake-bg.grey {
+        background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/kate-moss.png);
+        background-color: #bcbcbc;
+        }
+        .slider-content .image-mask {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 125%;
+        overflow: hidden;
+        }
+        .slider-content .image-mask img {
+        position: absolute;
+        display: block;
+        width: auto;
+        height: 100%;
+        top: -45px;
+        }
+        .slider-content .mask-animation {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0rem;
+        left: -5rem;
+        }
+        .slider-content .mask-animation img.clip {
+        width: 100%;
+        -webkit-clip-path: url(#svgPathBig);
+                clip-path: url(#svgPathBig);
+        }
+        .slider-content .image-caption {
+        position: absolute;
+        color: white;
+        transform: rotate(-90deg);
+        top: 20rem;
+        left: 12rem;
+        font-size: 1.3rem;
+        z-index: 10;
+        clip: rect(0rem, 21rem, 12rem, 0px);
+        display: inline-block;
+        transition: all 0.3s ease;
+        }
+        .slider-content .image-caption.mask-up {
+        clip: rect(0rem, 0rem, 12rem, 0px);
+        }
+        .slider-content .image-caption.mask-down {
+        clip: rect(0rem, 21rem, 2rem, 200px);
+        }
+        .slider-content .image-caption span {
+        display: inline-block;
+        vertical-align: top;
+        }
+        .slider-content .image-caption .line {
+        position: relative;
+        background: white;
+        height: 1px;
+        width: 5rem;
+        top: 1rem;
+        }
+        .slider-content .title-background {
+        position: absolute;
+        font-size: 25rem;
+        font-family: Narziss;
+        top: 8rem;
+        left: 4rem;
+        color: black;
+        opacity: 0.03;
+        text-align: right;
+        }
+        .slider-content .title-background span.mask-wrap {
+        display: block;
+        height: 25rem;
+        position: relative;
+        }
+        .slider-content .title-background span.mask-wrap span.mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        clip: rect(0rem, 120rem, 25rem, 0px);
+        transition: all 0.3s ease-in;
+        }
+        .slider-content .title-background span.mask-wrap:last-child span.mask {
+        transition-delay: 0.15s;
+        }
+        .slider-content .title-background span.mask-wrap.mask-up span.mask {
+        clip: rect(0rem, 120rem, 0rem, 0px);
+        }
+        .slider-content .title-background span.mask-wrap.mask-down span.mask {
+        clip: rect(25rem, 44rem, 25rem, 0px);
+        }
+        .slider-content .title-wrapper {
+        position: relative;
+        color: white;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        text-align: right;
+        margin-top: 25rem;
+        z-index: 5;
+        }
+        .slider-content .title-wrapper h1 {
+        font-size: 12rem;
+        margin: 0;
+        line-height: 1;
+        margin-bottom: 1rem;
+        font-weight: 900;
+        text-align: right;
+        font-family: Narziss-medium;
+        margin-left: 5rem;
+        }
+        .slider-content .title-wrapper h1 span.mask-wrap {
+        display: block;
+        height: 12rem;
+        position: relative;
+        }
+        .slider-content .title-wrapper h1 span.mask-wrap span.mask {
+        position: absolute;
+        top: 0;
+        right: 0;
+        clip: rect(0rem, 48rem, 12rem, 0px);
+        transition: all 0.3s ease-in;
+        }
+        .slider-content .title-wrapper h1 span.mask-wrap:last-child span.mask {
+        transition-delay: 0.15s;
+        }
+        .slider-content .title-wrapper h1 span.mask-wrap.mask-up span.mask {
+        clip: rect(0rem, 44rem, 0rem, 0px);
+        }
+        .slider-content .title-wrapper h1 span.mask-wrap.mask-down span.mask {
+        clip: rect(12rem, 44rem, 12rem, 0px);
+        }
+        .slider-content .title-wrapper span.gallery {
+        position: relative;
+        text-align: right;
+        padding: 0 2rem;
+        cursor: pointer;
+        margin-right: 5rem;
+        }
+        .slider-content .title-wrapper span.gallery::before {
+        content: "";
+        position: absolute;
+        left: -2rem;
+        display: block;
+        width: 1px;
+        height: 2.5rem;
+        background: white;
+        top: -0.5rem;
+        opacity: 0.9;
+        }
+        .slider-content .title-wrapper span.gallery::after {
+        content: "";
+        position: absolute;
+        right: -2rem;
+        display: block;
+        width: 1px;
+        height: 2.5rem;
+        background: white;
+        top: -0.5rem;
+        opacity: 0.9;
+        }
+
+        .control-nav {
+        position: absolute;
+        right: 3rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 999;
+        }
+        .control-nav ul {
+        position: relative;
+        list-style: none;
+        padding: 0;
+        }
+        .control-nav li {
+        position: relative;
+        margin: 0.2rem 0;
+        opacity: 0.5;
+        border-radius: 3rem;
+        color: white;
+        font-size: 1rem;
+        }
+        .control-nav li.active {
+        opacity: 1;
+        }
+        .control-nav li.active .line {
+        transform: translateX(-1.2rem);
+        width: 1.8rem;
+        }
+        .control-nav li.active .number {
+        opacity: 1;
+        }
+        .control-nav .line {
+        width: 1.5rem;
+        height: 1px;
+        display: block;
+        position: absolute;
+        top: 50%;
+        background: white;
+        left: -1rem;
+        transition: all 0.3s ease;
+        }
+        .control-nav .number {
+        position: relative;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        }
+
+        .social-icons {
+        position: absolute;
+        bottom: 3rem;
+        left: 3rem;
+        z-index: 999;
+        }
+        .social-icons ul {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        }
+        .social-icons ul li {
+        position: relative;
+        display: block;
+        padding: 0.3rem 0;
+        }
+        .social-icons ul a {
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        }
+        .social-icons ul a svg {
+        fill: white;
+        display: block;
+        width: 100%;
+        height: 100%;
+        }
+
+        .footer-wrapper {
+        position: absolute;
+        color: white;
+        bottom: 0rem;
+        right: 0rem;
+        width: 60%;
+        height: 6rem;
+        z-index: 999;
+        }
+        .footer-wrapper ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        text-align: center;
+        height: 100%;
+        }
+        .footer-wrapper ul:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .footer-wrapper li {
+        position: relative;
+        float: left;
+        width: 25%;
+        padding: 1.5rem;
+        background: rgba(0, 0, 0, 0.1);
+        text-transform: uppercase;
+        height: 100%;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        }
+        .footer-wrapper li:last-child {
+        border: none;
+        }
+        .footer-wrapper li.active .hover-box {
+        opacity: 1;
+        transform: scale(1.15);
+        }
+        .footer-wrapper li .hover-box {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #473243;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: all 0.3s ease-in;
+        z-index: 1;
+        }
+        .footer-wrapper li .box-content {
+        position: relative;
+        z-index: 5;
+        }
+    </style>
+</head>
+<body>
+    <svg height="0" width="0">
+        <symbol id="twitter" viewBox="0 0 800 800">
+            <path d="M679 239s-21 34-55 57c7 156-107 329-314 329-103 0-169-50-169-50s81 17 163-45c-83-5-103-77-103-77s23 6 50-2c-93-23-89-110-89-110s23 14 50 14c-84-65-34-148-34-148s76 107 228 116c-22-121 117-177 188-101 37-6 71-27 71-27s-12 41-49 61c30-2 63-17 63-17z"/>
+        </symbol> 
+        <symbol id="dribble" viewBox="0 0 800 800">
+            <path d="M400 665c-146 0-265-119-265-265s119-265 265-265 265 119 265 265-119 265-265 265zm223-229s-69-22-140-9c30 81 43 161 43 161s82-49 97-152zM488 609s-15-90-48-172c-132 44-179 142-179 142s96 83 227 30zm-256-57c80-128 193-152 193-152s-12-27-19-39c-124 37-232 32-232 32s-8 87 58 159zm-54-198s102 2 210-28c-38-71-84-130-84-130-107 49-126 158-126 158zm169-174s50 65 85 134c84-31 118-83 118-83s-76-78-203-51zm102 167c6 11 20 44 20 44s64-11 157 7c0-85-51-141-51-141s-38 55-126 90z"/>
+        </symbol>
+        
+        <symbol id="codepen" viewBox="0 0 800 800">
+            <path d="M140 482V320q0-10 10-18l238-158q12-8 24 0l238 158q9 6 10 19v158q0 10-10 19L412 656q-12 8-24 0L150 497q-9-6-10-15zm282-278v104l97 65 78-52zm-44 104V204L203 321l78 52zm-193 54v75l56-37zm193 234V492l-97-65-78 52zm22-143l79-53-79-53-79 53zm22 143l175-117-78-52-97 64v105zm193-159v-75l-56 38z"/>
+        </symbol>
+    </svg>
+    
+    <div class="slider-content">
+        <div class="header-wrapper">
+            <div class="header">
+                <div class="menu-wrapper">
+                    <div class="menu-hamburger"></div>
+                </div>
+                <div class="nav-wrapper">
+                    <nav>
+                    <ul>
+                        <li>Log In</li>
+                        <li>Sign Up</li>
+                        <li>Bag €0</li>
+                    </ul>
+                    </nav>  
+                </div>
+            </div>
+        </div>
+        
+        <div class="slider-wrapper">
+        <div class="slider-container"> 
+            <div class="control-nav">
+            <ul>
+                <li class="active"><span class="line"></span><span class="number">1</span></li>
+                <li><span class="line"></span><span class="number">2</span></li>
+                <li><span class="line"></span><span class="number">3</span></li>
+                <li><span class="line"></span><span class="number">4</span></li>
+            </ul>
+            </div>
+        <div class="lines-wrapper">
+            <div class="croses">
+            <span>+</span>
+            <span>+</span>
+            <span>+</span>
+            <span>+</span>
+            </div>
+            <span class="vertical"></span>
+            <span class="horizontal"></span>
+            <span class="horizontal"></span>
+            <span class="horizontal"></span>
+            <span class="horizontal"></span>
+            </div>
+            <div class="image-mask">
+            <img class="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/karlie-kloss_copy.png" alt="" />
+            </div>
+            <div class="slide active red" data-order="1" data-color="#EE4654" data-img="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/karlie-kloss_copy.png">
+            
+            <div class="fake-bg red"></div>
+            <canvas class="canvas" data-image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/mask-karlie.jpg"></canvas>
+            <div class="slide-content ">
+                <div class="image-caption">
+                <span class="line"></span> 
+                <span>Spring / Summer 2016</span>
+                
+                </div>
+                <div class="title-background">
+                <span class="mask-wrap">
+                    <span class="mask">Karlie</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Kloss</span>
+                    </span>
+                </div>
+                
+                <div class="title-wrapper">
+                <h1>
+                    <span class="mask-wrap">
+                    <span class="mask">Karlie</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Kloss</span>
+                    </span>
+                </h1>
+                <span class="gallery">View gallery</span>
+                </div>
+            
+            </div>
+            </div>
+            
+        <div class="slide blue" data-order="2" data-color="#EE4654" data-img="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/aline-weber.png">
+            <div class="fake-bg blue"></div>
+            <canvas class="canvas" data-image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/mask-aline.jpg"></canvas>
+            <div class="slide-content ">
+                
+                <div class="image-caption">
+                <span class="line"></span>
+                    <span>Fall / Winter 2016</span>
+                    
+                </div>
+                
+                <div class="title-background">
+                    <span class="mask-wrap">
+                    <span class="mask">Aline</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Weber</span>
+                    </span>
+                </div>
+                
+                <div class="title-wrapper">
+                <h1>
+                    <span class="mask-wrap">
+                    <span class="mask">Aline</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Weber</span>
+                    </span>
+                </h1>
+                <span class="gallery">View gallery</span>
+                </div>
+            
+            </div>
+            </div>
+            
+        <div class="slide green" data-order="3" data-color="#7ffe8e" data-img="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/miranda-kerr-color.png">
+            <div class="fake-bg green"></div>
+            <canvas class="canvas" data-image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/mask-miranda.jpg"></canvas>
+            <div class="slide-content ">
+                
+                <div class="image-caption">
+                <span class="line"></span>
+                    <span>Spring / Summer 2015</span>
+                    
+                </div>
+                
+                <div class="title-background">
+                    <span class="mask-wrap">
+                    <span class="mask">Miranda</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Kerr</span>
+                    </span>
+                </div>
+                
+                <div class="title-wrapper">
+                <h1>
+                    <span class="mask-wrap">
+                    <span class="mask">Miranda</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Kerr</span>
+                    </span>
+                </h1>
+                <span class="gallery">View gallery</span>
+                </div>
+            
+            </div>
+            </div>
+            
+            <div class="slide grey" data-order="4" data-color="#bcbcbc" data-img="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/kate-moss-color.png">
+            <div class="fake-bg grey"></div>
+            <canvas class="canvas" data-image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/mask-kate.jpg"></canvas>
+            <div class="slide-content ">
+                
+                <div class="image-caption">
+                <span class="line"></span>
+                    <span>Fall / Winter 2015</span>
+                    
+                </div>
+                
+                <div class="title-background">
+                    <span class="mask-wrap">
+                    <span class="mask">Kate</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Moss</span>
+                    </span>
+                </div>
+                
+                <div class="title-wrapper">
+                <h1>
+                    <span class="mask-wrap">
+                    <span class="mask">Kate</span>
+                    </span>
+                    <span class="mask-wrap">
+                    <span class="mask">Moss</span>
+                    </span>
+                </h1>
+                <span class="gallery">View gallery</span>
+                </div>
+            
+            </div>
+            </div>
+            
+        </div>
+        </div>
+        <div class="social-icons">
+            <ul>
+            <li><a href="https://twitter.com/mariosmaselli">
+                    <svg id="twitter-icon">
+                <use xlink:href="#twitter"></use>
+                </svg>
+                </a></li>
+            <li><a href="https://dribbble.com/mariosmaselli">
+                    <svg id="dribble-icon">
+                <use xlink:href="#dribble"></use>
+                </svg>
+                </a></li>
+            <li><a href="https://codepen.io/mariosmaselli/">
+                    <svg id="codepen-icon">
+                <use xlink:href="#codepen"></use>
+                </svg>
+                </a></li>
+            </ul>
+        </div>
+        <div class="footer-wrapper">
+            <ul>
+            <li class="active box" data-id="1">
+                <div class="hover-box"></div>
+                <div class="box-content">
+                <span>spring/summer </span><span>collection</span>
+                </div>
+            </li>
+            <li class="box" data-id="2">
+                <div class="hover-box"></div>
+                <div class="box-content">
+                <span>fall/winter 2016 </span><span>collection</span>
+                </div>
+            </li>
+            <li class="box" data-id="3" > 
+                <div class="hover-box"></div>
+                <div class="box-content">
+                <span>spring/summer 2015</span><span>collection</span>
+                </div>
+            </li>
+            <li class="box" data-id="4"  >
+                <div class="hover-box"></div>
+                <div class="box-content">
+                <span>fall/winter 2015 </span><span>collection</span>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 引入jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script>
+        /*
+        You can check out original dribble shot here https://dribbble.com/shots/2375246-Fashion-Butique-slider-animation
+
+        Comments or suggestions are always appreciate it. 
+        */
+        var mySlider = {
+        
+        config: {    
+            slider : '.slider-content',
+            activeSlide : '.slide.active',
+            footerButtons: '.footer-wrapper .box',
+            bgPicture: '.image-mask img',
+            nav : '.control-nav',
+            position : {
+                x: 350,
+                alpha:1,
+            },
+            nextPosition :{
+                x: 150,
+                alpha:1,
+            },
+        },
+        
+        init : function(config) {
+            this.canvasInit();
+            $(mySlider.config.footerButtons).
+                    click(function() {
+                        mySlider.changeButton($(this));
+                    });
+        },
+        
+        canvasInit : function() {
+            var canvas = $('.canvas')[0];
+            var ctx = canvas.getContext('2d');
+            var w = $(mySlider.config.activeSlide).width();
+            var h = $(mySlider.config.activeSlide).height();
+            var img = document.createElement('IMG'); 
+            img.src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/42764/mask-karlie.jpg";
+            var position = {
+                x: 150,
+                alpha:1,
+            }
+            if (window.matchMedia("(min-width: 860px)").matches) {
+                position = {
+                    x: 200,
+                    alpha:1,
+                }
+            }
+            if (window.matchMedia("(min-width: 1200px)").matches) {
+                position = {
+                    x: 250,
+                    alpha:1,
+                }
+            }
+            canvas.width = w;
+            canvas.height = h;
+            mySlider.drawMask(canvas, ctx, position, img);
+        },
+        
+        drawMask : function(canvas, ctx, position,img) {
+            var w = $(mySlider.config.activeSlide).width();
+            var h = $(mySlider.config.activeSlide).height();
+            var cy = 50;
+            var mStroke = 25; 
+            var mWidth = 180;
+            var mHeight = 300;
+            
+            if (window.matchMedia("(min-width: 860px)").matches) {
+            mStroke = 35; 
+            cy = 80;
+            mWidth = 260;
+            mHeight = 380;
+            }
+            
+            if (window.matchMedia("(min-width: 1200px)").matches) {
+            
+            mStroke = 40; 
+            cy = 120;
+            mWidth = 360;
+            mHeight = 460;
+            }
+
+            ctx.globalAlpha=position.alpha;
+            ctx.clearRect(0,0,w,h);
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(position.x,cy,mWidth,mStroke);
+            ctx.clip();
+            ctx.drawImage(img,0,0, w, h);
+            ctx.restore();
+            
+            ctx.save();
+            ctx.rect(position.x, cy, mStroke, mHeight);
+            ctx.clip();
+            ctx.drawImage(img,0,0, w, h);
+            ctx.restore();
+            
+            ctx.save();
+            ctx.rect( position.x +mWidth, cy, mStroke, mHeight);
+            ctx.clip();
+            ctx.drawImage(img,0,0, w, h);
+            ctx.restore();
+
+            ctx.save();
+            ctx.rect(position.x, cy + (mHeight-mStroke), mWidth, mStroke);
+            ctx.clip();
+            ctx.drawImage(img,0,0, w, h);
+            ctx.restore();  
+        },
+        
+        changeSlide : function(id) {
+        
+        var activeSlide = $(mySlider.config.activeSlide);
+        var newSlide = $(mySlider.config.slider).find('[data-order="'+id+'"]');
+            
+            this.animateSlide(activeSlide, newSlide);
+            this.createMask(activeSlide, newSlide);
+            
+        },
+        
+        changeNav : function(id) {
+            
+            var activeNav = $(mySlider.config.nav).find('li');
+            
+            activeNav.removeClass('active');
+            activeNav.eq(id-1).addClass('active');
+            
+        },
+        
+        changeButton : function(el) {
+            
+            var activeButton = $(mySlider.config.slider).find('.box.active');
+            var target = el.data('id');
+            
+            if( !(el.hasClass('active')) ){
+            
+            activeButton.removeClass('active');
+            el.addClass('active');
+            this.changeSlide(target); 
+            this.changeNav(target); 
+            }
+        },
+        
+        createMask : function(active, newSlide) {
+            
+            var currentCanvas = active.find('.canvas')[0];
+            var nextCanvas = newSlide.find('.canvas')[0];
+            var position = mySlider.config.position;
+            var positionNext =  mySlider.config.nextPosition;  
+            
+            var currentctx = currentCanvas.getContext('2d');
+            var nextctx = nextCanvas.getContext('2d');
+            
+            var w = $(mySlider.config.activeSlide).width();
+            var h = $(mySlider.config.activeSlide).height();
+            
+            var currentImg = document.createElement('IMG'); 
+            var nextImg = document.createElement('IMG'); 
+            var movex = 200;
+
+            var position = {
+                x: 350,
+                alpha:1,
+            }
+        var nextPosition={
+                x: 150,
+                alpha:1,
+            }
+            
+            TweenMax.set(positionNext, {x:"150"});
+            
+            if (window.matchMedia("(min-width: 860px)").matches) {
+            
+            position = {
+                x: 400,
+                alpha:1,
+            };
+            
+            nextPosition = {
+                x: 200,
+                alpha:1,
+            };
+            
+                movex = 200;
+            
+            TweenMax.set(positionNext, {x:"200"});
+            }
+            
+            if (window.matchMedia("(min-width: 1200px)").matches) {
+                position = {
+                x: 450,
+                alpha:1,
+            };
+            
+            nextPosition = {
+                x: 250,
+                alpha:1,
+            };
+            
+            movex = 200; 
+            TweenMax.set(positionNext, {x:"250"});
+            }
+            
+            currentImg.src = active.find('canvas').data('image');
+            nextImg.src = newSlide.find('canvas').data('image');
+            
+            currentCanvas.width = nextCanvas.width = w;
+            currentCanvas.height = nextCanvas.height = h;
+            
+            TweenMax.to(newSlide.find('.canvas'),0.3,{autoAlpha:1, delay:1.5});
+            
+            TweenMax.to(positionNext, 0.5, {x:"-="+movex+"", onUpdate: function() {
+            
+            mySlider.drawMask(currentCanvas, currentctx, positionNext, currentImg);
+
+            },  onComplete: function() {
+            
+            TweenMax.to(active.find('.canvas'), 0.3, {autoAlpha:0}, "-=0.2");
+            TweenMax.to(newSlide.find('.canvas'), 0.3, {autoAlpha:0}, "-=0.2");
+            }});
+            
+            
+            nextImg.onload = function() {
+            mySlider.drawMask(nextCanvas, nextctx, positionNext, nextImg);
+            
+            TweenMax.to(position, 1, {x:"-="+movex+"", delay:1.3, onUpdate: function() {
+            
+                mySlider.drawMask(nextCanvas, nextctx, position, nextImg);
+
+                }});
+            
+            console.log(position)
+            }
+            
+        },
+        
+        animateSlide : function(active, newSlide) {
+            
+            var w = $(mySlider.config.slider).width();
+            var backgroundImg = $(mySlider.config.bgPicture);
+            var activeTitleBg = active.find('.title-background .mask-wrap');
+            var activeMainTitle = active.find('.title-wrapper h1 .mask-wrap');
+            var activeSlideContent = active.find('.slide-content'); 
+            var activefakeBg = active.find('.fake-bg');
+            var activeImageCaption = active.find('.image-caption');
+
+            var newTitleBg = newSlide.find('.title-background .mask-wrap');
+            var newTitle = newSlide.find('.title-wrapper h1 .mask-wrap');
+            var newBgPicture = newSlide.data('img');
+            var newfakeBg = newSlide.find('.fake-bg');
+            var nextImageCaption = newSlide.find('.image-caption');
+            var img = $('<img />')
+            
+            newSlide.addClass('next');
+            
+            activeMainTitle.addClass('mask-up')
+            activeTitleBg.addClass('mask-down')
+            activeImageCaption.addClass('mask-up');
+            newTitle.addClass('mask-down');
+            newTitleBg.addClass('mask-up');
+            nextImageCaption.addClass('mask-down');
+            
+            
+            TweenMax.set(activeSlideContent, {width:w});
+            TweenMax.set(activefakeBg, {width:w});
+            TweenMax.set(newfakeBg, {autoAlpha:0});
+            
+            TweenMax.to(active, 0.8, {width:'0%', ease: Power4.easeIn});
+            TweenMax.to(activefakeBg, 0.3, {autoAlpha: 0, delay:0.4});
+            TweenMax.to(backgroundImg, 0.3, {autoAlpha: 0, delay:0.4});
+            
+            setTimeout(function() {
+                backgroundImg.remove();
+                img.attr('src', newBgPicture).css('opacity',0);
+                
+                $('.image-mask').append(img);
+                
+            },600)
+            
+            TweenMax.to(newfakeBg, 0.5, {autoAlpha: 1, delay:1});
+            TweenMax.to(img, 0.5, {autoAlpha: 1, delay:1});
+            
+            setTimeout(function() {
+                newTitle.removeClass('mask-down');
+                newTitleBg.removeClass('mask-up');
+                
+            },800);
+            
+            
+            
+            setTimeout(function() {
+                active.removeClass('active');
+                newSlide.addClass('active').removeClass('next');
+                TweenMax.set(active, {width:'100%'});
+                activeMainTitle.removeClass('mask-up');
+                activeTitleBg.removeClass('mask-down');
+                activeImageCaption.removeClass('mask-up');
+                nextImageCaption.removeClass('mask-down');
+
+            },1500)
+        }
+        
+        }
+
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
+
+
+
+        $(document).ready(function() { 
+
+        mySlider.init(); 
+
+        var fn = debounce(function() {
+
+            mySlider.init()
+
+        }, 250);
+
+        $(window).on('resize', fn);
+
+        });
+
+    </script>
+</body>
+</html>
