@@ -1,0 +1,143 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--JQUERY CND-->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+    integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+    crossorigin="anonymous"></script>
+    <!--FONT AWESOME-->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <!--CSS FILE-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Number Counter</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        .container{
+            background: linear-gradient(rgba(231, 241, 248, .9), rgba(231, 241, 248, 0.9)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSsOYZ0IVms5JYYwrW32RhBpVdtXgh40D86g&usqp=CAU');
+            background-position: center;
+            background-repect: no-repect;
+            background-size: cover;
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+        .row{
+            width: 1140px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .col{
+            float: left;
+        }
+        .span_1_of_4{
+            width: 25%;
+        }
+        /*****COUNTER BOX*****/
+        .counter-box{
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 0 20px;
+            box-shadow: 5px 7px 15px -10px #00000045;
+        }
+        .counter-box img{
+            width: 30%;
+            display: block;
+            margin: auto;
+        }
+        .span_1_of_4 h2{
+            font-size: 50px;
+        }
+        .span_1_of_4 span{
+            font-size: 40px;
+        }
+        .span_1_of_4 h2,span{
+            display: inline-block;
+            padding: 20px 0 5px 0;
+        }
+        .span_1_of_4 h3{
+            font-size: 20px;
+            color: #000000ab;
+        }
+        .span_1_of_4:nth-child(1) h2{
+            color: #4855f9;
+        }
+        .span_1_of_4:nth-child(2) h2{
+            color: #c716fbb0;
+        }
+        .span_1_of_4:nth-child(3) h2{
+            color: #00d3ff;
+        }
+        .span_1_of_4:nth-child(4) h2{
+            color: #00da80;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col span_1_of_4">
+                <div class="counter-box">
+<img src="https://cdn-icons.flaticon.com/png/128/4205/premium/4205106.png?token=exp=1639655593~hmac=e93aa4fe25b68781e03f5fd516b46a7b" alt="coding">
+                    <h2 class="counter">3050000</h2>
+                    <h3>Coding Line</h3>
+                </div>
+            </div>
+            <div class="col span_1_of_4">
+                <div class="counter-box">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1659/1659098.png" alt="">
+                    <h2 class="counter">103</h2> <span style="color: #000000ab;">+</span>
+                    <h3>Project Complate</h3>
+                </div>
+            </div>
+            <div class="col span_1_of_4">
+                <div class="counter-box">
+                    <img src="https://cdn-icons.flaticon.com/png/128/1057/premium/1057970.png?token=exp=1639655721~hmac=4e5c8faa28506389cf50a5c7f7f30805" alt="">
+                    <h2 class="counter">80</h2>
+                    <h3>Happy Clints</h3>
+                </div>
+            </div>
+            <div class="col span_1_of_4">
+                <div class="counter-box">
+                    <img src="https://cdn-icons-png.flaticon.com/128/868/868132.png" alt="">
+                    <h2 class="counter">40</h2>
+                    <h3>Awrad</h3>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <!--PLUGIN FILE-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script></script>
+
+    <script>
+        /*resources js*/
+        $(document).ready(function(){
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+        });
+        /*vendors file*/
+        /* jquery.counterup.js 1.0*/
+        (function(e){"use strict";e.fn.counterUp=function(t){var n=e.extend({time:400,delay:10},t);return this.each(function(){var t=e(this),r=n,i=function(){var e=[],n=r.time/r.delay,i=t.text(),s=/[0-9]+,[0-9]+/.test(i);i=i.replace(/,/g,"");var o=/^[0-9]+$/.test(i),u=/^[0-9]+\.[0-9]+$/.test(i),a=u?(i.split(".")[1]||[]).length:0;for(var f=n;f>=1;f--){var l=parseInt(i/n*f);u&&(l=parseFloat(i/n*f).toFixed(a));if(s)while(/(\d+)(\d{3})/.test(l.toString()))l=l.toString().replace(/(\d+)(\d{3})/,"$1,$2");e.unshift(l)}t.data("counterup-nums",e);t.text("0");var c=function(){t.text(t.data("counterup-nums").shift());if(t.data("counterup-nums").length)setTimeout(t.data("counterup-func"),r.delay);else{delete t.data("counterup-nums");t.data("counterup-nums",null);t.data("counterup-func",null)}};t.data("counterup-func",c);setTimeout(t.data("counterup-func"),r.delay)};t.waypoint(i,{offset:"100%",triggerOnce:!0})})}})(jQuery);
+    </script>
+</body>
+</html>
