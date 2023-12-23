@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    
+    <style>
+        .navbar {
+  background-color: #458B74;
+}
+
+.navbar ul li a {
+  color: #fff !important;
+  font-size: 15px;
+}
+
+.navbar ul li a:hover {
+  background-color: #fff !important;
+  color: #458B74 !important;
+}
+
+.navbar-brand {
+  color: #fff !important;
+  font-size: 20px;
+}
+
+
+/***** HOME *****/
+
+#home {
+  background: url("https://dl.dropboxusercontent.com/s/4m9w1xo90gocn9z/SSGTHB82F6.jpg?dl=0") no-repeat center center fixed;
+  background-size: cover;
+  height: 680px;
+}
+
+.home-wrap {
+  padding-top: 140px;
+}
+
+.home-header {
+  font-family: 'Oswald';
+  font-size: 60px;
+  color: #fff;
+}
+
+h2 {
+  font-family: 'Oswald';
+  font-size: 40px;
+  color: #fff;
+}
+
+.home-line {
+  border: 0;
+  height: 3px;
+  width: 90%;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 153, 0, 1), rgba(0, 0, 0, 0));
+}
+
+.btn {
+  margin: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #458B74;
+  color: #fff;
+  border: none;
+  font-size: 25px;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #458B74;
+}
+
+
+/***** ABOUT *****/
+
+#about {
+  background-color: #458B74;
+  color: #fff;
+  padding-bottom: 80px;
+}
+
+.about-wrap {
+  width: 60%;
+  margin: auto;
+  margin-top: 95px;
+}
+
+h1 {
+  font-family: 'Oswald';
+  text-align: center;
+}
+
+.line {
+  margin-top: 30px;
+  width: 50%;
+  height: 2px;
+  background-color: orange;
+  border: none;
+}
+
+.about-text {
+  font-size: 23px;
+  font-family: 'PT Serif', serif;
+  text-align: justify;
+}
+
+.camp-link {
+  color: #fff;
+}
+
+.skills-list li {
+  font-size: 18px;
+  list-style-position: inside;
+  text-align: justify;
+  margin-left: 40px;
+}
+
+
+/***** PORTFOLIO *****/
+
+#portfolio {
+  padding-top: 30px;
+  padding-bottom: 40px;
+  background-color: #EEDFCC;
+}
+
+.portfolio-header {
+  color: #000;
+}
+
+.placeholder-item {
+  margin-top: 40px;
+  text-align: center;
+  overflo: hidden;
+}
+
+.placeholder-desc {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #000;
+}
+
+img {
+  border: 1px solid orange;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.divider {
+  background-color: #458B74;
+  height: 3px;
+}
+
+
+/***** CONTACT *****/
+
+#contact {
+  background-color: #EEDFCC;
+  padding-top: 10px;
+  padding-bottom: 65px;
+}
+
+.contact-header {
+  font-family: "Oswald";
+  color: #000;
+  font-size: 40px;
+}
+
+.contact-line {
+  background-color: orange;
+  border: none;
+  height: 2px;
+  width: 40%;
+}
+
+.contact-wrap {
+  margin-top: 60px;
+}
+
+form {
+  margin-top: 50px;
+}
+
+input {
+  width: 40%;
+  height: 30px;
+  margin: 10px;
+}
+
+#message {
+  width: 40%;
+  height: 200px;
+  margin-top: 10px;
+}
+
+#submit-button {
+  widh: 10%;
+  height: 40px;
+}
+
+
+/***** FOOTER *****/
+
+footer {
+  background-color: #458B74;
+  height: 40px;
+}
+
+.footer-menu {
+  margin-left: -30px;
+}
+
+.footer-menu li {
+  display: inline;
+  margin: 10px;
+}
+
+.footer-menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 17px;
+}
+
+@media screen and (max-width: 1000px) {
+  .about-text {
+    font-size: 15px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  .skills-list li {
+    font-size: 15px;
+  }
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation bar with the help of bootstrap -->
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+                </button>
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+  
+    <div id="home">
+        <div class="home-wrap text-center">
+        <h1 class="home-header">Personal Portfolio Webpage</h1>
+        <h2>Placeholder Text</h2>
+        <hr class="home-line">
+        <div class="home-buttons">
+            <a href="#" class="btn btn-default"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="btn btn-default"><i class="fa fa-linkedin"></i></a><a href="#" class="btn btn-default"><i class="fa fa-github"></i></a>
+            <a href="#" class="btn btn-default"><i class="fa fa-fire"></i></a>
+        </div>
+        </div>
+    </div>
+    
+    <div id="about">
+        <div class="container">
+            <div class="about-wrap text-center">
+                <h1>ABOUT ME</h1>
+                <hr class="line">
+                <div class="about-text">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+                <p>Below you can see some of my work.</p>
+                </div>
+                <div class="row">
+                <div class="col-md-6">
+                    <h3>Front-End Skills:</h3>
+                    <ul class="skills-list">
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h3>Back-End Skills:</h3>
+                    <ul class="skills-list">
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    <li>Placeholder</li>
+                    </ul>
+                    <!-- col -->
+                </div>
+                <!-- row -->
+                </div>
+                <!-- about-wrap div -->
+            </div>
+            <!-- container div -->
+        </div>
+        <!-- about div -->
+    </div>
+  
+    <div id="portfolio">
+        <div class="container">
+        <h1 class="portfolio-header text-center">PORTFOLIO</h1>
+        <hr class="line">
+        <div class="placeholder-box">
+            <div class="row">
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="placeholder-item">
+                <a href="#"><img src="https://placehold.it/350x150" alt="project"></a>
+                <p class="placeholder-desc"> Placeholder</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="divider"></div>
+  
+    <div id="contact">
+        <div class="container">
+        <div class="contact-wrap text-center">
+            <h1 class="contact-header">CONTACT</h1>
+            <hr class="contact-line">
+            <form method="post" action="#">
+            <div class="row">
+                <div class="col-md-12">
+                <input type="text" id="name" name="name" required="required" placeholder="John Doe" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <input type="email" id="email" name="email" placeholder="johndoe@example.com" required="required" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <textarea id="message" name="message" required="required" data-minlength="20"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                <input type="submit" value="Submit" class="btn btn-default" id="submit-button" />
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+        
+    <footer>
+        <ul class="footer-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
