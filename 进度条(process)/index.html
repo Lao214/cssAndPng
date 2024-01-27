@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .icon {
+            display: inline-block;
+            width: 24px; /* 根据实际情况设置每个图标的宽度 */
+            height: 24px; /* 根据实际情况设置每个图标的高度 */
+            background-color: grey; /* 默认颜色 */
+            margin-right: 5px;
+        }
+        .filled {
+            background-color: green !important; /* 填充的颜色 */
+        }
+    </style>
+</head>
+<body>
+
+<div id="progress">
+    <!-- 这里是10个图标 -->
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+    <i class="icon"></i>
+</div>
+
+<script>
+    // 假设当前进度为70%，即填充7个图标
+    const progress = 7;
+    
+    let icons = document.querySelectorAll('#progress .icon');
+    
+    for (let i = 0; i < progress && i < icons.length; i++) {
+        icons[i].classList.add('filled');
+    }
+</script>
+
+</body>
+</html>
