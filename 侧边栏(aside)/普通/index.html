@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/0a55f338bd.js"
+      crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+        body {
+            background: #dfe9f5;
+        }
+        nav {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            background: #fff;
+            width: 90px;
+            overflow: hidden;
+            transition: width 0.3s linear;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            text-align: center;
+            display: flex;
+            transition: all 0.5s ease;
+            margin: 10px 0 0 10px;
+        }
+        .logo img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .logo span {
+            font-weight: bold;
+            padding-left: 15px;
+            font-size: 18px;
+        }
+        a {
+            position: relative;
+            color: rgb(85, 83, 83);
+            font-size: 14px;
+            display: flex;
+            width: 300px;
+            padding: 10px;
+        }
+        .fa-solid {
+            position: relative;
+            width: 70px;
+            height: 40px;
+            top: 14px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .nav-item {
+            position: relative;
+            top: 12px;
+            margin-left: 10px;
+        }
+        a:hover {
+            background: #eee;
+        }
+        nav:hover {
+            width: 280px;
+            transition: all 0.5s ease;
+        }
+        .logout {
+            position: absolute;
+            bottom: 0;
+        }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <!-- <li>
+          <a href="#" class="logo">
+            <img src="/logo.jpg" alt="" />
+            <span class="nav-item">侧边栏</span>
+          </a> 
+        </li> -->
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-house-user"></i>
+            <span class="nav-item">主页</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-user"></i>
+            <span class="nav-item">用户</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-wallet"></i>
+            <span class="nav-item">收入</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-chart-simple"></i>
+            <span class="nav-item">分析</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="nav-item">任务</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-gear"></i>
+            <span class="nav-item">设置</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="nav-item">帮助</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="nav-item">登出</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </body>
+</html>
