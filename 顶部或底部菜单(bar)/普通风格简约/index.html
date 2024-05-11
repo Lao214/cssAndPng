@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto);
+
+        body {
+        height: 100%;
+        background: #FAFAFA;
+        overflow: hidden;
+        font-family: 'Roboto', sans-serif;
+        
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        }
+
+        .tab-bar {
+        margin: 30px auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        list-style-type: none;
+        -webkit-padding-start: 0;
+        
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        }
+
+        .tab {
+        width: 150px;
+        padding: 20px 0;
+        background: white;
+        color: #607D8B;
+        overflow: hidden;
+        text-align: center;
+        -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        cursor: pointer;
+        position: relative;
+        
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+        }
+
+        .indicator {
+        width: 150px;
+        height: 3px;
+        background: #2196F3;
+        position: absolute;
+        margin-top: 58px;
+        margin-left:0;
+        
+        -webkit-transition: margin 0.5s ease;
+        
+        transition: margin 0.5s ease;
+        }
+
+        .cercle {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        }
+
+        .light .cercle {background: white}
+        .dark .cercle {background: black}
+
+        .anim {
+        opacity: 0.2;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+        -webkit-animation: touch 1.2s ease-out;
+                animation: touch 1.2s ease-out;
+        }
+
+        @-webkit-keyframes touch {
+        100% { 
+            width: 600px;
+            height: 600px;
+            border-radius: 600px;
+            opacity: 0;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            margin: -300px;
+        }
+        }
+
+        @keyframes touch {
+        100% { 
+            width: 600px;
+            height: 600px;
+            border-radius: 600px;
+            opacity: 0;
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+            margin: -300px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <ul class="tab-bar">
+        <li data-num="1" class="tab wave dark">HOME</li>
+        <li data-num="2" class="tab wave dark">ABOUT</li>
+        <li data-num="3" class="tab wave dark">PORTFOLIO</li>
+        <li data-num="4" class="tab wave dark">SOCIAL</li>
+        <li data-num="5" class="tab wave dark">CONTACT</li>
+        <div class="indicator"></div>
+    </ul>
+
+    <script>
+        var waveBtn = (function () {
+        'use strict';
+        var btn = document.querySelectorAll('.wave'),
+            tab = document.querySelector('.tab-bar'),
+            indicator = document.querySelector('.indicator'),
+            indi = 0;
+        indicator.style.marginLeft = indi + 'px';
+
+        for(var i = 0; i < btn.length; i++) {
+            btn[i].onmousedown = function (e) {
+            var newRound = document.createElement('div'),x,y;
+
+            newRound.className = 'cercle';
+            this.appendChild(newRound);
+
+            x = e.pageX - this.offsetLeft;
+            y = e.pageY - this.offsetTop;
+
+            newRound.style.left = x + "px";
+            newRound.style.top = y + "px";
+            newRound.className += " anim";
+
+            indicator.style.marginLeft = indi + (this.dataset.num-1) * 150 + 'px';
+
+            setTimeout(function() {
+                newRound.remove();
+            }, 1200);
+            };
+        }
+        }());
+    </script>
+</body>
+</html>
