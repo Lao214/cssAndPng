@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: url('https://westfieldcc.files.wordpress.com/2011/10/simple-blur-ipad-background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .wrapper {
+            margin: 100px auto;
+            width: 80%;
+            font-family: sans-serif;
+            color: #98927C;
+            font-size: 14px;
+            line-height: 24px;
+            max-width: 600px;
+            min-width: 340px;
+            overflow: hidden;
+        }
+        .tabs li {
+            list-style: none;
+            float: left;
+            width: 20%;
+        }
+        .tabs a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            position: relative;
+            text-transform: uppercase;
+            color: #fff;
+            height: 70px;
+            line-height: 90px;
+            background: linear-gradient(165deg, transparent 29%, #98927C 30%);
+        }
+        .tabs a:hover,
+        .tabs a.active {
+            background: linear-gradient(165deg, transparent 29%, #F2EEE2 30%);
+            color: #98927C;
+        }
+        .tabs a:before {
+            content: '';
+            position: absolute;
+            z-index: 11;
+            left: 100%;
+            top: -100%;
+            height: 70px;
+            line-height: 90px;
+            width: 0;
+            border-bottom: 70px solid rgba(0, 0, 0, 0.1);
+            border-right: 7px solid transparent;
+        }
+        .tabs a.active:before {
+            content: '';
+            position: absolute;
+            z-index: 11;
+            left: 100%;
+            top: -100%;
+            height: 70px;
+            line-height: 90px;
+            width: 0;
+            border-bottom: 70px solid rgba(0, 0, 0, 0.2);
+            border-right: 20px solid transparent;
+        }
+        .tabgroup {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+        .tabgroup div {
+            padding: 30px;
+            background: #F2EEE2;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <ul class="tabs clearfix" data-tabgroup="first-tab-group">
+          <li><a href="#tab1" class="active">Tab 1</a></li>
+          <li><a href="#tab2">Tab 2</a></li>
+          <li><a href="#tab3">Tab 3</a></li>
+          <li><a href="#tab4">Tab 4</a></li>
+          <li><a href="#tab5">Tab 5</a></li>
+        </ul>
+        <section id="first-tab-group" class="tabgroup">
+          <div id="tab1">
+            <h2>Heading 1</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla deserunt consectetur ratione id tempore laborum laudantium facilis reprehenderit beatae dolores ipsum nesciunt alias iusto dicta eius itaque blanditiis modi velit.</p>
+          </div>
+          <div id="tab2">
+            <h2>Heading 2</h2>
+            <p>Adipisci autem obcaecati velit natus quos beatae explicabo at tempora minima voluptates deserunt eum consectetur reiciendis placeat dolorem repellat in nam asperiores impedit voluptas iure repellendus unde eveniet accusamus ex.</p>
+          </div>
+          <div id="tab3">
+            <h2>Heading 3</h2>
+            <p>Atque ratione soluta laboriosam illo inventore amet ipsum aliquam assumenda harum provident nam accusantium neque debitis obcaecati maxime officia saepe ad ducimus in quam libero vero quasi. Saepe sit nisi?</p>
+          </div>
+          <div id="tab4">
+            <h2>Heading 4</h2>
+            <p>Quidem perferendis id sapiente cumque ullam repellendus dolorum odit rerum quibusdam tempora voluptatibus ipsum. Maiores laborum velit aperiam dicta quisquam assumenda at esse exercitationem culpa sequi porro minus ipsa aut.</p>
+          </div>
+          <div id="tab5">
+            <h2>Heading 5</h2>
+            <p>Iste eligendi ratione libero impedit quos necessitatibus labore corporis deserunt quo porro hic eius delectus ea ad amet dolore officiis debitis! Libero officia magnam consequuntur dignissimos molestias quia modi repellat.</p>
+          </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+
+    <script>
+        $('.tabgroup > div').hide()
+        $('.tabgroup > div:first-of-type').show()
+        $('.tabs a').click(function(e){
+        e.preventDefault()
+            var $this = $(this),
+                tabgroup = '#' + $this.parents('.tabs').data('tabgroup'),
+                others = $this.closest('li').siblings().children('a'),
+                target = $this.attr('href')
+            others.removeClass('active')
+            $this.addClass('active')
+            $(tabgroup).children('div').hide()
+            $(target).show()
+        })
+    </script>
+</body>
+</html>
