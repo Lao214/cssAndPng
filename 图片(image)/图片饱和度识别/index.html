@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            /* margin: 50px; */
+            padding-top: 50px;
+            text-align: center;
+        }
+        .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            padding: 2rem;
+        }
+        .upload-container input[type="file"] {
+            margin: 20px 0;
+        }
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .preview {
+            max-width: 480px;
+        }
+
+        .uploadBtn {
+            background: transparent;
+            border: 2px solid #134070;
+            margin: 14px 0;
+            padding: 10px 40px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+        .header {
+            position: absolute;
+            top: 0;
+            width: 99vw;
+            height: 60px;
+            border-top: 4px solid orange;
+            border-bottom: 1px solid #cecece;
+            display: flex;
+            align-items: center;
+        }
+
+        /* slider */
+
+        .slider-track {
+            margin-left: 20px;
+            width: 14rem;
+            height: 8px;
+            background-color: #ddd;
+            border-radius: 4px;
+            position: relative;
+            /* margin-top: 20px; */
+        }
+
+        .slider-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 14%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .slider-thumb:hover {
+            background-color: #2980b9;
+        }
+
+        .slider-value {
+            margin-left: 14px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #248ef2;
+            padding: 4px;
+            color: white;
+        }
+         /* slider end */
+    </style>
+</head>
+<body>
+    <div class="header">
+        <svg t="1723595741594" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="21032" width="48" height="48"><path d="M85.333333 938.666667h874.666667v42.666666H42.666667V193.621333h42.666666V938.666667zM938.666667 85.333333H64.917333V42.666667H981.333333v790.677333h-42.666666V85.333333z" fill="#334966" p-id="21033"></path><path d="M512 512m-192 0a192 192 0 1 0 384 0 192 192 0 1 0-384 0Z" fill="#00A4FF" p-id="21034"></path><path d="M213.333333 490.666667h597.333334v42.666666H213.333333z" fill="#334966" p-id="21035"></path><path d="M490.666667 213.333333h42.666666v597.333334h-42.666666z" fill="#334966" p-id="21036"></path><path d="M64 64m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#334966" p-id="21037"></path><path d="M960 960m-64 0a64 64 0 1 0 128 0 64 64 0 1 0-128 0Z" fill="#334966" p-id="21038"></path></svg>
+    </div>
+
+    <div class="upload-container">
+        <p style="color: #248ef2;margin-bottom: 4px;font-size: 2rem;font-weight: 700;">AI Image Killer</p>
+        <p style="color: #384964;font-size: 1.4rem;font-weight: 500;margin-bottom: 4px;">This is a picture saturation identification tool. Please click the button to upload the picture.</p>
+        
+        <div style="display: flex;width: 100%;align-items: center;">
+            <button class="uploadBtn" onclick="document.getElementById('fileInput').click()">
+                <svg style="width: 1.4rem;" t="1723596265054" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="22911"><path d="M657.192574 1001.147198H116.505014A116.208927 116.208927 0 0 1 0.296088 885.424501V115.722697A116.208927 116.208927 0 0 1 116.505014 0h771.646724a116.208927 116.208927 0 0 1 115.722697 115.722697v443.927825a38.412156 38.412156 0 0 1-38.412156 38.898386 38.898386 38.898386 0 0 1-38.898385-38.898386V115.722697a38.412156 38.412156 0 0 0-38.412156-38.412156H116.505014a38.412156 38.412156 0 0 0-38.898385 38.412156v769.701804a38.898386 38.898386 0 0 0 38.898385 38.412156h443.441596a38.412156 38.412156 0 0 1 38.412156 38.412156 38.898386 38.898386 0 0 1-38.412156 38.898385z m-97.245964 0" p-id="22912"></path><path d="M39.194473 770.188034a38.898386 38.898386 0 0 1-27.22887-64.668566l194.491928-192.060779a115.236467 115.236467 0 0 1 133.226971-21.394112l209.565052 104.539412a38.412156 38.412156 0 0 0 44.246913-7.293448l346.681862-345.709401a38.412156 38.412156 0 0 1 54.45774 0 37.925926 37.925926 0 0 1 0 54.457739l-346.681862 345.709402a115.722697 115.722697 0 0 1-133.7132 21.394112l-211.023742-105.511871a37.439696 37.439696 0 0 0-44.246913 6.807218l-194.491928 191.574549a39.384615 39.384615 0 0 1-27.22887 11.669515z m308.755936-385.094017a115.722697 115.722697 0 1 1 114.750237-117.181386 115.722697 115.722697 0 0 1-115.722697 115.722697z m0-153.648623a38.412156 38.412156 0 1 0 38.412155 38.412156 38.412156 38.412156 0 0 0-38.412155-38.412156z m481.853751 790.609687a38.412156 38.412156 0 0 1-38.412156-38.898386v-229.014245a38.412156 38.412156 0 0 1 38.412156-38.412156 38.898386 38.898386 0 0 1 38.898385 38.412156v230.959164a38.898386 38.898386 0 0 1-38.898385 38.898386z m0 0" p-id="22913"></path><path d="M984.425242 866.461538a39.870845 39.870845 0 0 1-26.74264-10.210826l-127.878442-120.098765-128.364673 120.098765a38.509402 38.509402 0 0 1-52.51282-56.402659l135.17189-126.419753a58.347578 58.347578 0 0 1 45.219373-21.394112 56.888889 56.888889 0 0 1 45.219373 21.394112l135.17189 126.419753a38.412156 38.412156 0 0 1 0 54.94397 35.981007 35.981007 0 0 1-27.22887 11.669515z m0 0" p-id="22914"></path></svg> 
+                <span style="margin-left: 4px;">Upload</span>
+            </button>
+    
+            <div class="slider-track">
+                <div class="slider-thumb"></div>
+            </div>
+            <div style="margin-left: 19px;">SAT: </div>
+            <div class="slider-value">150</div>
+        </div>
+
+        <input type="file" id="fileInput" style="display: none" accept="image/*" onchange="previewImage(event)" />
+  
+        <div class="preview-container">
+            <img id="original-image" class="preview" src="" alt="原始图片">
+            <img id="image-preview" class="preview" src="" alt="预览图片">
+        </div>
+    </div>
+    
+
+    <script>
+        function adjustSaturation(imgData, sat) {
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const r = data[i];
+                const g = data[i + 1];
+                const b = data[i + 2];
+
+                const max = Math.max(r, g, b);
+                const min = Math.min(r, g, b);
+                const l = (max + min) / 2;
+
+                if (max !== min) {
+                    const d = max - min;
+                    const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    let newS;
+
+                    if (sat <= 100) {
+                        newS = s * (sat / 100);
+                    } else {
+                        const t = (sat - 100) / 100;
+                        newS = s + (1 - s) * t;
+                    }
+
+                    const factor = newS / s;
+
+                    data[i] = Math.round(Math.min(255, Math.max(0, l + (r - l) * factor)));
+                    data[i + 1] = Math.round(Math.min(255, Math.max(0, l + (g - l) * factor)));
+                    data[i + 2] = Math.round(Math.min(255, Math.max(0, l + (b - l) * factor)));
+                }
+            }
+            return imgData;
+        }
+
+        let originalImageData;
+        let imageLoaded = false;
+        let sat = 150;
+
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function () {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    ctx.drawImage(img, 0, 0);
+
+                    // 显示原始图片
+                    document.getElementById('original-image').src = canvas.toDataURL();
+
+                    // 获取图像数据并保存原始数据
+                    originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    imageLoaded = true;
+
+                    // 更新预览图
+                    updateImagePreview(sat);
+                };
+                img.src = reader.result;
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        function updateImagePreview(sat) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            canvas.width = originalImageData.width;
+            canvas.height = originalImageData.height;
+
+            // 将原始图像数据拷贝一份
+            const imgData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+
+            // 调整饱和度
+            const adjustedImageData = adjustSaturation(imgData, sat);
+
+            // 显示调整后的图像
+            ctx.putImageData(adjustedImageData, 0, 0);
+            document.getElementById('image-preview').src = canvas.toDataURL();
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const sliderThumb = document.querySelector(".slider-thumb");
+            const sliderTrack = document.querySelector(".slider-track");
+            const sliderValue = document.querySelector(".slider-value");
+
+            const minValue = 100;
+            const maxValue = 200;
+            const defaultValue = 150;
+
+            let isDragging = false;
+
+            // 计算默认位置并初始化滑块位置
+            const trackRect = sliderTrack.getBoundingClientRect();
+            const defaultLeft = ((defaultValue - minValue) / (maxValue - minValue)) * trackRect.width;
+            sliderThumb.style.left = defaultLeft + "px";
+            sliderValue.textContent = defaultValue;
+
+            sliderThumb.addEventListener("mousedown", function (event) {
+                isDragging = true;
+                document.body.style.cursor = "grabbing";
+            });
+
+            document.addEventListener("mousemove", function (event) {
+                if (isDragging) {
+                    let newLeft = event.clientX - trackRect.left;
+
+                    // 限制滑块在轨道范围内
+                    if (newLeft < 0) newLeft = 0;
+                    if (newLeft > trackRect.width) newLeft = trackRect.width;
+
+                    sliderThumb.style.left = newLeft + "px";
+
+                    // 根据滑块的位置计算对应的值
+                    const value = Math.round(minValue + (newLeft / trackRect.width) * (maxValue - minValue));
+                    sliderValue.textContent = value;
+                    sat = value;
+                }
+            });
+
+            document.addEventListener("mouseup", function () {
+                isDragging = false;
+                document.body.style.cursor = "default";
+
+                // 如果图片已加载，更新预览图的饱和度
+                if (imageLoaded && originalImageData) {
+                    updateImagePreview(sat);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

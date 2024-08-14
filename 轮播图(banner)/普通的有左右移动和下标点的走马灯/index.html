@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #ECEFFC;
+        }
+
+        .carousel {
+            --carousel-width: 600px;
+            --carousel-height: 400px;
+            --navdots-height: 24px;
+            --active-index: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: var(--carousel-width);
+            height: var(--carousel-height);
+        }
+        .carousel .slides {
+            display: flex;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory;
+            overscroll-behavior: contain;
+            list-style-type: none;
+        }
+        .carousel .slides img {
+            width: var(--carousel-width);
+            height: calc(var(--carousel-height) - var(--navdots-height));
+            scroll-snap-align: start;
+        }
+        .carousel .nav-dots {
+            display: flex;
+            justify-content: space-around;
+            height: var(--navdots-height);
+            padding: 20px 0 0 0;
+            margin: 0;
+            list-style-type: none;
+        }
+        .carousel .nav-dots .dot a {
+            position: relative;
+            display: block;
+            width: calc(var(--navdots-height) / 2);
+            height: 50%;
+        }
+        .carousel .nav-dots .dot a::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+        }
+        .carousel .nav-dots .dot a:hover::before {
+            background: rgba(0, 0, 0, 0.4);
+        }
+        .carousel .nav-dots .dot a.active::before {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .carousel .nav-arrows {
+            margin: 0;
+            list-style-type: none;
+        }
+        .carousel .nav-arrows li {
+            position: absolute;
+            bottom: calc(50%);
+            width: 2em;
+            height: 2em;
+            border: 5px solid black;
+            cursor: pointer;
+        }
+        .carousel .nav-arrows li.arrow-left {
+            left: -50px;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            transform: rotate(-45deg);
+            transition: 1s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .carousel .nav-arrows li.arrow-right {
+            right: -50px;
+            border-left-color: transparent;
+            border-bottom-color: transparent;
+            transform: rotate(45deg);
+            transition: 1s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+        .carousel .nav-arrows li.arrow-left::before {
+            position: absolute;
+            content: "";
+            top: calc(-13%);
+            left: calc(-15%);
+            width: inherit;
+            height: inherit;
+            border: inherit;
+        }
+        .carousel .nav-arrows li.arrow-left:hover {
+            border-left-color: #e74c3c;
+            border-top-color: #e74c3c;
+        }
+        .carousel .nav-arrows li.arrow-left:hover::before {
+            border-left-color: #e74c3c;
+            border-top-color: #e74c3c;
+            animation: fadeToLeft 2.5s cubic-bezier(0.2, 1, 0.3, 1) infinite;
+        }
+        .carousel .nav-arrows li.arrow-right::before {
+            position: absolute;
+            content: "";
+            top: calc(-13%);
+            left: calc(-15%);
+            width: inherit;
+            height: inherit;
+            border: inherit;
+        }
+        .carousel .nav-arrows li.arrow-right:hover {
+            border-right-color: #e74c3c;
+            border-top-color: #e74c3c;
+        }
+        .carousel .nav-arrows li.arrow-right:hover::before {
+            border-right-color: #e74c3c;
+            border-top-color: #e74c3c;
+            animation: fadeToRight 2.5s cubic-bezier(0.2, 1, 0.3, 1) infinite;
+        }
+
+        @keyframes fadeToLeft {
+        5% {
+            transform: translate(10%, 10%);
+        }
+        to {
+            transform: translate(-100%, -100%);
+            opacity: 0;
+        }
+        }
+        @keyframes fadeToRight {
+        5% {
+            transform: translate(-10%, 10%);
+        }
+        to {
+            transform: translate(100%, -100%);
+            opacity: 0;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel auto-play">
+        <ul class="slides">
+          <li id="slide-1" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2020/03/21/03/04/future-4952543_1280.jpg" alt="img1" />
+          </li>
+          <li id="slide-2" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2016/03/19/04/01/ecology-1266170_1280.jpg" alt="img2" />
+          </li>
+          <li id="slide-3" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2015/03/19/07/40/aerospace-680510_1280.jpg" alt="img3" />
+          </li>
+          <li id="slide-4" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2020/01/31/09/13/shenzhen-4807544_1280.jpg" alt="img4" />
+          </li>
+          <li id="slide-5" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2016/03/21/13/38/traditional-and-technology-1270519_1280.jpg" alt="img5" />
+          </li>
+          <li id="slide-6" class="slide">
+            <img src="https://cdn.pixabay.com/photo/2022/09/10/22/09/headquarters-7445782_1280.jpg" alt="img6" />
+          </li>
+        </ul>
+        <ul class="nav-dots">
+          <li class="dot"><a href="#slide-1"></a></li>
+          <li class="dot"><a href="#slide-2"></a></li>
+          <li class="dot"><a href="#slide-3"></a></li>
+          <li class="dot"><a href="#slide-4"></a></li>
+          <li class="dot"><a href="#slide-5"></a></li>
+          <li class="dot"><a href="#slide-6"></a></li>
+        </ul>
+        <ul class="nav-arrows">
+          <li class="arrow-left"></li>
+          <li class="arrow-right"></li>
+        </ul>
+    </div>
+
+    <script>
+        "use strict";
+        const AUTO_PLAY_SECOND = 4000;
+        let carousel = document.querySelector(".carousel");
+        let dots = document.querySelectorAll(".dot a");
+        let slides = document.querySelector(".slides");
+        let slideCount = dots.length;
+        let setActiveIndex = (activeIndex) => {
+            dots.forEach(dot => dot.classList.remove("active"));
+            dots[activeIndex].classList.add("active");
+            carousel.style.setProperty("--active-index", `${activeIndex}`);
+        };
+        let scrollLeft = () => {
+            let minIndex = false;
+            let activeIndex = Number(carousel.style.getPropertyValue("--active-index"));
+            activeIndex--;
+            if (activeIndex === -1) {
+                minIndex = true;
+                activeIndex = slideCount - 1;
+            }
+            setActiveIndex(activeIndex);
+            if (minIndex) {
+                slides.scrollBy(carousel.offsetWidth * (slideCount - 1), 0);
+            }
+            else {
+                slides.scrollBy(-carousel.offsetWidth, 0);
+            }
+        };
+        let scrollRight = () => {
+            let maxIndex = false;
+            let activeIndex = Number(carousel.style.getPropertyValue("--active-index"));
+            activeIndex++;
+            if (activeIndex === slideCount) {
+                maxIndex = true;
+                activeIndex = 0;
+            }
+            setActiveIndex(activeIndex);
+            if (maxIndex) {
+                slides.scrollBy(-carousel.offsetWidth * (slideCount - 1), 0);
+            }
+            else {
+                slides.scrollBy(carousel.offsetWidth, 0);
+            }
+        };
+        // auto play
+        let autoPlayTimer = setInterval(scrollRight, AUTO_PLAY_SECOND);
+        let canAutoPlay = carousel.classList.contains("auto-play");
+        if (!canAutoPlay) {
+            clearInterval(autoPlayTimer);
+        }
+        let resetTimer = () => {
+            if (canAutoPlay) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = setInterval(scrollRight, AUTO_PLAY_SECOND);
+            }
+        };
+        // dots
+        dots[0].classList.add("active");
+        dots.forEach((dot, activeIndex) => {
+            dot.addEventListener("click", () => {
+                resetTimer();
+                setActiveIndex(activeIndex);
+            });
+        });
+        // arrows
+        let leftArrow = document.querySelector(".nav-arrows .arrow-left");
+        let rightArrow = document.querySelector(".nav-arrows .arrow-right");
+        leftArrow.addEventListener("click", () => {
+            resetTimer();
+            scrollLeft();
+        });
+        rightArrow.addEventListener("click", () => {
+            resetTimer();
+            scrollRight();
+        });
+
+    </script>
+</body>
+</html>
