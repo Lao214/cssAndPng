@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
+  <title>Scratch a Match</title>
+  <style>
+    HTML,
+    body {
+    margin: 0;
+    }
+
+    body {
+    background: #f2f2f2;
+    font-family: "Titan One", cursive;
+    color: #fff;
+    user-select: none;
+    }
+
+    .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    width: 480px;
+    height: 840px;
+    margin: 20px auto;
+    }
+
+    .background {
+    grid-column: 1;
+    grid-row: 1 / span 5;
+    box-shadow: 15px 15px 10px #c7c8c8;
+    }
+
+    .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: 1;
+    grid-row: 3;
+    text-align: center;
+    justify-content: center;
+    align-items: end;
+    font-size: 1.2em;
+    }
+
+    #clicks {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    }
+
+    .stars {
+    margin-bottom: 10px;
+    }
+
+    #restart {
+    color: #fff;
+    background: #f2bc1b;
+    font-family: "Titan One", cursive;
+    padding: 5px 10px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    #restart:hover {
+    background: #f22258;
+    }
+
+    #score {
+    margin-top: 10px;
+    }
+
+    #score,
+    #time,
+    #restart,
+    #cash-value,
+    #clicks,
+    .modal-content {
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+    }
+
+    .card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 96px);
+    grid-template-rows: repeat(4, 96px);
+    grid-gap: 10px;
+    grid-column: 1;
+    grid-row: 4;
+    margin-bottom: -50px;
+    justify-content: center;
+    perspective: 1500;
+    }
+
+    .card {
+    width: 96px;
+    height: 96px;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    position: relative;
+    }
+
+    .card-back,
+    .card-front {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+
+    .card-front {
+    transform: rotateY(180deg);
+    text-align: center;
+    z-index: -1;
+    }
+
+    /* The value inside the card  */
+    #cash-value {
+    position: absolute;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    font-size: 1.9em;
+    line-height: 96px;
+    }
+
+    /* The flip animation triggered by click */
+    .flip-card {
+    transform: rotateY(180deg);
+    }
+
+    .footer {
+    grid-column: 1;
+    grid-row: 5;
+    text-align: center;
+    margin-top: 60px;
+    font-size: 0.8em;
+    }
+
+    /* The modal popup */
+    .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.6);
+    animation-name: fade;
+    animation-duration: 0.8s;
+    display: none;
+    }
+
+    .modal-content {
+    margin: 50px auto;
+    max-width: 300px;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    background: #049dbf;
+    border: 10px solid #f2bc1b;
+    box-shadow: 15px 15px 10px rgb(0, 0, 0, 0.5);
+    }
+
+    #modal-final-score {
+    font-size: 1.8em;
+    color: #f2bc1b;
+    margin: 20px;
+    }
+
+    #modal-close,
+    #modal-replay {
+    border: none;
+    width: 100%;
+    background: #f2bc1b;
+    color: #fff;
+    padding: 10px 20px;
+    font-family: "Titan One", cursive;
+    font-size: 1em;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);
+    }
+
+    #modal-close:hover,
+    #modal-replay:hover {
+    cursor: pointer;
+    background: #f22258;
+    }
+
+    @keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+    }
+
+    /* Media Queries */
+    @media screen and (max-width: 480px) {
+    .container {
+        margin: 0 auto;
+    }
+    }
+
+  </style>
+</head>
+<body>
+  
+  <div class="modal">
+    <div class="modal-content">
+      <img src="https://image.ibb.co/fYFLrT/like_a_boss.png" alt="A picture of a text reading Like a Boss!">
+      <div class="modal-stars">
+        <img src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+        <img src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+        <img src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+      </div>
+      <p id="modal-time">Time: 01:20</p>
+      <p id="modal-clicks">Clicks: 30</p>
+      <p id="modal-score">Score: $500</p>
+      <p id="modal-bonus">Bonus: 100X</p>
+      <p id="modal-final-score">$200,000</p>
+      <button id="modal-replay">Replay</button>
+      <button id="modal-close">Close</button>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <img class="background" src="https://image.ibb.co/hoRPko/bg.jpg" alt="A picture of the main game background">
+
+    <div class="stats">
+      <div class="stars">
+        <p id="clicks">Clicks: 0</p>
+        <img id="star-1" src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+        <img id="star-2" src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+        <img id="star-3" src="https://image.ibb.co/dobzko/star.png" alt="A picture of a star icon">
+      </div>
+      <p id="time">00:00</p>
+      <div>
+        <button id="restart">Restart</button>
+        <p id="score">$0</p>
+      </div>
+    </div>
+
+    <section class="card-container">
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$0</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$0</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$1</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$1</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$5</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$5</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$10</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$10</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$20</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$20</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$30</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$30</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$40</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$40</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$50</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-back">
+          <img src="https://image.ibb.co/fNZ5rT/card_back.png" alt="A picture of a card's back face">
+        </div>
+        <div class="card-front">
+          <img src="https://image.ibb.co/cv1My8/card_front.png" alt="A picture of a card's front face">
+          <p id="cash-value">$50</p>
+        </div>
+      </div>
+      
+    </section>
+
+    <footer class="footer">
+      <p>Designed and Developed By Charlie Taminian © 2018.</p>
+    </footer>
+
+  </main>
+
+  <script>
+        const cards = document.querySelector('.card-container');
+        const stars = document.querySelector('.stars');
+        const restartBtn = document.querySelector('#restart');
+
+        const modal = document.querySelector('.modal');
+        const modalTime = document.querySelector('#modal-time');
+        const modalStars = document.querySelector('.modal-stars');
+        const modalClicks = document.querySelector('#modal-clicks');
+        const modalScore = document.querySelector('#modal-score');
+        const modalBonus = document.querySelector('#modal-bonus');
+        const modalFinalScore = document.querySelector('#modal-final-score');
+        const modalCloseBtn = document.querySelector('#modal-close');
+        const modalReplayBtn = document.querySelector('#modal-replay');
+
+        let scoreDisplay = document.querySelector('#score');
+        let timeDisplay = document.querySelector('#time');
+        let clicksDisplay = document.querySelector('#clicks');
+
+        /* All possible values to choose from...they can be changed except 100...it's a special bonus value
+        If 100 is changed, also change the value inside populateCardValues and calculateBonus functions */
+        const possibleCardValues = [[0,0], [1,1], [5,5], [10,10], [20,20], [30,30], [40,40], [50,50], [100,100]];
+
+        // The actual card values are selected from this array
+        let randomCardValues = [];
+
+        // This will hold 2 values to see if they are a match or not
+        let clickedCardValues = [];
+
+        let score = 0;
+        let count = 0;
+        let match = 0;
+        let clicks = 0;
+        let bonus = 0;
+        let finalScore = 0;
+        let seconds = 0;
+        let minutes = 0;
+        let timer = 0;
+
+        init();
+
+        function init() {
+        generateRandomValues();
+        populateCardValues();
+        cards.addEventListener('click', flipCards);
+        }
+
+        /* Generate a random index from possibleCardValues array
+        Grab the value pair at that index and push it into a temporary array
+        For each value pair in the temporary array, push each value seperately into randomCarValues */
+        function generateRandomValues() {
+        let tempArr = [];
+
+        for (i = 0; i < possibleCardValues.length - 1; i++) {
+            let randomIndex = Math.floor(Math.random() * possibleCardValues.length);
+            tempArr.push(possibleCardValues[randomIndex]);
+        }
+
+        for (const val of tempArr) {
+            val.forEach(v => randomCardValues.push(v));
+        }
+        }
+
+        /* Generate a random index from randomCardValues array
+        Splice that value at the index to remove it from the array and then assign it to a card */
+        function populateCardValues() {
+        for (let i = 0; i <= cards.children.length - 1; i++) {
+            let randIndex = Math.floor(Math.random() * randomCardValues.length);
+
+            // Splice returns an array, so parse it back to an int
+            let slicedVal = parseInt(randomCardValues.splice(randIndex,1));
+            cards.children[i].lastElementChild.lastElementChild.textContent = `$${slicedVal}`;
+
+            // If the card has a value of 100 change it's background image and add bonus
+            if (cards.children[i].lastElementChild.lastElementChild.textContent === '$100') {
+            cards.children[i].lastElementChild.firstElementChild.setAttribute('src', 'https://image.ibb.co/b8GFQo/card_special.png');
+            bonus++;
+            }
+        }
+        }
+
+        function startTimer() {
+        seconds++;
+
+        if (seconds <= 9) {
+            timeDisplay.textContent = `0${minutes}:0${seconds}`;
+        } else {
+            timeDisplay.textContent = `0${minutes}:${seconds}`;
+        }
+
+        if (seconds >= 59) {
+            minutes += 1;
+            // -1 here ensures seconds start at 0 every minute change
+            seconds = -1;
+        }
+        }
+
+        function flipCards(e) {
+        if (clicks === 0) {
+            timer = setInterval(startTimer, 1000);
+        }
+        
+        const grandParent = e.target.closest('.card');
+        
+        if (grandParent.classList.contains('flip-card') === false) {
+            count++;
+            clicks++;
+            clicksDisplay.textContent = `Clicks: ${clicks}`;
+        }
+        
+        starRating();
+        
+        // Flip only none flipped cards that are not a match
+        if (count < 3 && grandParent.classList.contains('matched') === false && grandParent.classList.contains('flip-card') === false) {
+            grandParent.classList.add('flip-card');
+
+            // Remove the dollar sign before pushing the value into clickedCardValues array for evaluation
+            let removeDollarSign = e.target.closest('.card-back').nextElementSibling.lastElementChild.textContent.slice(1);
+
+            // Slice returns a string, so parse it back to an int then push it into the array
+            clickedCardValues.push(parseInt(removeDollarSign));
+        }
+
+        // 2 cards must be flipped before we can evaluate them, also isMatching is delayed to allow the flip animation to complete
+        if (count === 2) {
+            setTimeout(isMatching, 750);
+        }
+        }
+
+        /* If values inside clickedCardValues don't match flip them back
+        If they do, then add a dummy class called 'matched' to prevent them from flipping back */
+        function isMatching() {
+        if (clickedCardValues[0] !== clickedCardValues[1]) {
+            for (const card of cards.children) {
+            if (card.classList.contains('flip-card') === true && card.classList.contains('matched') === false) {
+                card.classList.remove('flip-card');
+            }
+            }
+
+            // Reset the count and remove those 2 values from the array
+            count = 0;
+            clickedCardValues = [];
+            
+        } else {
+            match++;
+            count = 0;
+
+            // Matched is a dummy class only used to prevent flipped cards from flipping back and being clicked on
+            for (const card of cards.children) {
+            if (card.classList.contains('flip-card') === true) {
+                card.classList.add('matched');
+            }
+            }
+
+            addScore();
+
+            // When 8 pairs are matched...then game is over
+            if (match === 8) {
+            gameOver();
+            }
+        }
+        }
+
+        // If the 2 values inside clickedCardValues are equal...add them up and display the score
+        function addScore() {
+        // Higher order functions FTW! Finally I get to use one!
+        score += clickedCardValues.reduce((total, score) => total + score ,0);
+        scoreDisplay.textContent = `$${score}`;
+        clickedCardValues = [];
+        }
+
+        // When the game is over, stop the timer, calculate the stars and bonus and show the modal popup
+        function gameOver() {
+        clearInterval(timer);
+        starRating();
+        calculateBonus();
+        modal.style.display = 'block';
+        modalTime.textContent = `Time: ${formatTime(minutes, seconds)}`;
+        modalClicks.textContent = `Clicks: ${clicks}`;
+        modalScore.textContent = `Score: $${score}`;
+        }
+
+        // Make the finalScore look pretty by adding a (,) where it belongs for example 10,000 or 100,000
+        function formatScore(num) {
+        let str = num.toString();
+        let arr = str.split('');
+
+        if (str.length === 4) {
+            arr.splice(1, 0, ',');
+        }
+
+        if (str.length === 5) {
+            arr.splice(2, 0, ',');
+        }
+
+        if (str.length === 6) {
+            arr.splice(3, 0, ',');
+        }
+
+        str = `$${arr.join('')}`;
+        return str;
+        }
+
+        // Make the time look pretty by adding or removing the 0 before seonds or minutes
+        function formatTime(mins, secs) {
+        if (secs <= 9) {
+            secs = `0${secs}`;
+        }
+
+        if (mins <= 9) {
+            mis = `0${mins}`;
+        }
+
+        return `${mins}:${seconds}`;
+        }
+
+        // Change the image of the stars based on moves...clicks can be changed here to make game easier or harder
+        function starRating() {
+        if (clicks >= 27) {
+            stars.children[3].setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+            modalStars.lastElementChild.setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+        }
+
+        if (clicks >= 34) {
+            stars.children[2].setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+            modalStars.firstElementChild.nextElementSibling.setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+        }
+
+        if (clicks >= 40) {
+            stars.children[1].setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+            modalStars.firstElementChild.setAttribute('src', 'https://image.ibb.co/gvAgy8/empty_star.png');
+        }
+        }
+
+        // The bonus will multiply the score by 100 for each pair
+        function calculateBonus() {
+        if (bonus > 0) {
+            bonus = (bonus / 2) * 100;
+            finalScore = score * bonus;
+            modalBonus.textContent = `Bonus: ${bonus}X`;
+            modalFinalScore.textContent = `${formatScore(finalScore)}`;
+            modalBonus.style.display = 'block';
+            modalFinalScore.style.display = 'block';
+        } else {
+            // If the game didn't have a bonus ($100) then don't show it in the modal
+            modalBonus.style.display = 'none';
+            modalFinalScore.style.display = 'none';
+        }
+        }
+
+        // Reset everything back to default state
+        function restartGame() {
+        clicks = 0;
+        score = 0;
+        count = 0;
+        match = 0;
+        bonus = 0;
+        finalScore = 0;
+        minutes = 0;
+        seconds = 0;
+
+        clicksDisplay.textContent = `Clicks: ${clicks}`;
+        scoreDisplay.textContent = `$${score}`;
+
+        clearInterval(timer);
+        timeDisplay.textContent = `0${minutes}:0${seconds}`;
+
+        for (const card of cards.children) {
+            if (card.classList.contains('flip-card') === true || card.classList.contains('matched') === true) {
+            card.classList.remove('flip-card');
+            card.classList.remove('matched');
+            }
+            card.lastElementChild.firstElementChild.setAttribute('src', 'https://image.ibb.co/cv1My8/card_front.png');
+        }
+
+        generateRandomValues();
+
+        // Wait til cards are flipped before changing the values...No cheating!
+        setTimeout(populateCardValues, 1000);
+
+        stars.children[2].setAttribute('src', 'https://image.ibb.co/dobzko/star.png');
+        stars.children[3].setAttribute('src', 'https://image.ibb.co/dobzko/star.png');
+        }
+
+        restartBtn.addEventListener('click', restartGame);
+        modalReplayBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        restartGame();
+        });
+        modalCloseBtn.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', () => modal.style.display = 'none');
+
+  </script>
+</body>
+</html>

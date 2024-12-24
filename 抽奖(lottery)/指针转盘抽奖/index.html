@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @charset "UTF-8";
+        html,
+        body {
+            box-sizing: border-box;
+            color: #333;
+            font-size: 16px;
+            font-family: "微軟正黑體";
+        }
+
+        .lottery {
+            box-sizing: border-box;
+            background: #ddd;
+            width: 100%;
+            padding: 1em;
+        }
+
+        .turntable,
+        .prizes {
+            background: #fff;
+            border-radius: 100%;
+            height: 500px;
+            width: 500px;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .turntable {
+            border: 40px solid #e24747;
+            display: inline-block;
+        }
+
+        .prizes {
+            background: #ffb1b5;
+            margin-top: -0.3%;
+            transition: all 2s cubic-bezier(0.1, 0.79, 0.74, 0.6);
+        }
+        .prizes .prize {
+            display: inline-block;
+            float: left;
+            list-style: none;
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            line-height: 300px;
+            text-align: right;
+            transform-origin: 100% 100%;
+        }
+        .prizes .prize:nth-child(1) {
+            background: #ff7aa1;
+            transform: rotate(0deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(1) .prizeName {
+            position: absolute;
+            top: 0;
+            right: 30%;
+            transform: skew(-30deg);
+        }
+        .prizes .prize:nth-child(2) {
+            background: #ffc107;
+            transform: rotate(60deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(2) .prizeName {
+            position: absolute;
+            top: 0;
+            right: 30%;
+            transform: rotate(-40deg) skew(20deg);
+        }
+        .prizes .prize:nth-child(3) {
+            background: #cddc39;
+            transform: rotate(120deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(3) .prizeName {
+            position: absolute;
+            top: 0;
+            right: 30%;
+            transform: rotate(-90deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(4) {
+            background: #81c784;
+            transform: rotate(180deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(4) .prizeName {
+        position: absolute;
+        top: 10%;
+        right: 30%;
+        transform: rotate(180deg) skew(-30deg);
+        }
+        .prizes .prize:nth-child(5) {
+        background: #03a9f4;
+        transform: rotate(240deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(5) .prizeName {
+        position: absolute;
+        top: 10%;
+        right: 25%;
+        transform: rotate(140deg) skew(15deg);
+        }
+        .prizes .prize:nth-child(6) {
+        background: #9664ad;
+        transform: rotate(300deg) skew(30deg);
+        }
+        .prizes .prize:nth-child(6) .prizeName {
+        position: absolute;
+        top: 8%;
+        right: 27%;
+        transform: rotate(90deg) skew(15deg);
+        }
+
+        .getPrize {
+        background: #e04479;
+        border: 3px solid #f0f0f0;
+        border-radius: 100%;
+        color: #fdfdfd;
+        display: block;
+        font-size: 36px;
+        padding: 10px;
+        position: absolute;
+        top: 38%;
+        left: 38%;
+        height: 100px;
+        width: 100px;
+        text-align: center;
+        text-decoration: none;
+        z-index: 1;
+        }
+        .getPrize:hover {
+        background: #ff9800;
+        font-size: bold;
+        }
+        .getPrize:after {
+        background: linear-gradient(45deg, #c55230 49%, #c55230 50%, #f44336 51%, #f44336 100%);
+        background: -webkit-linear-gradient(45deg, #c55230 49%, #c55230 50%, #f44336 51%, #f44336 100%);
+        border-radius: 0px 100px 20px 100px;
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 20%;
+        width: 70px;
+        height: 70px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        }
+
+        .clearBtn {
+        cursor: pointer;
+        background: #ffffff;
+        box-shadow: 0px 2px 4px #ccc;
+        width: 100px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        transition: all 0.6s;
+        }
+        .clearBtn:hover {
+        background: #38a4d8;
+        }
+
+        .result {
+        float: right;
+        color: #ff0000;
+        font-weight: bold;
+        }
+
+        .result .text {
+            background: rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid #ddd;
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="lottery">
+        <div class="clearBtn">重新開始</div>
+        <div class="turntable">
+            <a href='#' class="getPrize">立即抽獎</a>
+            <ul class="prizes"></ul>
+        </div>
+        <div class="result"></div>
+    </div>
+      
+    <!-- jquery參考：
+    https://hk.saowen.com/a/924cc3b532ea4509726d30a0f6071fc194d4cb4bbd4a911e29571880dd4d8bb9 
+    // 【Jquery】抽獎轉盤、輪盤：http://blog.7311.tw/2016/11/jquery.html
+    // demo
+    https://www.js-css.cn/jscode/award/award12/-->
+      
+    <!-- css 參考：https://www.jianshu.com/p/2acce3d9c8bd -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        // 獎品資訊
+        var jsonData = {
+        prizes: [
+            {
+            name: "大獎",
+            total: 1
+            },
+            {
+            name: "二獎",
+            total: 1
+            },
+            {
+            name: "三獎",
+            total: 1
+            },
+            {
+            name: "四獎",
+            total: 1
+            },
+            {
+            name: "五獎",
+            total: 1
+            },
+            {
+            name: "六獎",
+            total: 1
+            }
+        ]
+        };
+        /*----- 抽獎 -----*/
+        var prizes = jsonData.prizes; //奬項
+        var sum = 0; //全獎項總數
+        var play = 0;
+
+        prizes.forEach(function(element, idx) {
+        var total = jsonData.prizes[idx].total;
+        sum = total + sum;
+        });
+        var hasPrizes = sum; //目前剩下的獎項額度
+        // console.log('sum',sum);
+
+        /*----- 抽獎動畫特效 -----*/
+
+        // 顯示獎品項目
+        //load
+        $("document").ready(function() {
+        // var angle = 360 / prizes.length; //旋轉角度
+        //產生奬品項目
+        prizes.forEach(function(element, idx) {
+            $(".turntable .prizes").append(
+            '<li class="prize"><span class="prizeName">' +
+                prizes[idx].name +
+                "</span></li>"
+            );
+        });
+        });
+
+        var prizesLen = prizes.length; //6
+        var isActive = true; //是否正在抽獎
+        // getPrize onclick
+        $(".getPrize").on("click", function() {
+        //init
+        //hasPrizes -=1;
+        // console.log('hasPrizes',hasPrizes);
+        if (isActive) {
+            //isActive = !isActive; //防止重複點擊
+            //判斷獎品全部抽完時結束 if( hasPrizes >= 0 )
+            // $(".prizes").css({ transform: "rotate(0deg)" });
+            rotating();
+        } else {
+            alert("你己經抽獎過了");
+        }
+
+        //rotating
+        function rotating() {
+            var random = Math.floor(Math.random() * 6) + 1;
+            //console.log(random);
+            play += 1;
+            var angle = random * 60; //角度
+            var deg = 360 * 5 * play; //轉動特效
+            var idx = 0; // 第幾個獎
+            var isRotter = true;
+
+            //判斷獎項
+            if (angle === 60) {
+            idx = 0;
+            } else if (angle === 360) {
+            idx = 1;
+            } else if (angle === 300) {
+            idx = 2;
+            } else if (angle === 240) {
+            idx = 3;
+            } else if (angle === 180) {
+            idx = 4;
+            } else if (angle === 120) {
+            idx = 5;
+            }
+            
+            $(".prizes").css(
+            { transform: "rotate(" + (deg + angle) + "deg)" }
+            );
+            
+            $(".result").append(
+            '<div class="text"> 目前為第 ' +
+                play +
+                ' 抽獎，㳟喜抽中 "' +
+                prizes[idx].name +
+                '"</div>'
+            );    
+            
+        }
+        });
+
+        //clear btn
+        $(".clearBtn").on("click", function() {
+        // $('.prizes').css('transform','rotate(60deg)');
+        isActive = true;
+        // hasPrizes = sum;
+        $(".result").text("");
+        });
+
+        //其他 筆記
+
+        //模組化
+        // $.fn.rotate = function(degrees) {
+        //   $(this).css({'transform':'rotate('+degrees+'deg'+')'});
+        // }
+
+
+    </script>
+</body>
+</html>
