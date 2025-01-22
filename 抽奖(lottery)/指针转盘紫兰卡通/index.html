@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>A Great Demo on CodePen</title>
+  <style>
+        *, *::before, *::after{
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        body{
+            font-family: 'Roboto Condensed', serif;
+            background-color: #5858B9;
+        }
+        header{
+            padding: 10px 8px; 
+        }
+        .to2017, .to2018{
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px 20px;
+            background-color: #FF00BA;
+            border-radius: 4px;
+            outline: none;
+            border: 0  ;
+            cursor: pointer;
+        }
+        .to2017:hover, .to2018:hover{
+            background-color: #22299B;
+        }
+
+        main{
+            padding: 10px 0;
+        }
+
+        .wheel{
+            width: 540px;
+            height: 540px;
+            background-color: #22299B;
+            border-radius: 50%;
+            border: 3px solid #000;
+            margin: 60px auto;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+        }
+
+        .decoration{
+            width: 540px;
+            height: 540px;
+            position: absolute;
+        }
+        .decorationItem{
+            width: 24px;
+            height: 270px;
+            left: 260px;
+            position: relative;
+            transform-origin: 50% 100%;
+            transform: rotate(0deg);
+            position: absolute;
+            z-index: 20;
+        }
+
+        .star{
+            width: 24px;
+            height: 24px;
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
+            background-color: #1F1172;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: -3px;
+            left: 0px;
+        }
+        .star::after{
+            content: "";
+            width: 20px;
+            height: 20px;
+            clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0 50%, 35% 35%);
+            background-color: #FF00BA;
+            position: absolute;
+        }
+
+        .dot{
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border: 2px solid #1f1172;
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 8px;
+            z-index: 15;
+        }
+
+        .wheelInner{
+            position: relative;
+            transform: rotate(0deg);
+        }
+
+        .wheelPie{
+            width: 500px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 3px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pressBtnOuter{
+            width: 128px;
+            height: 128px;
+            background-color: #FF00BA;
+            border-radius: 50%;
+            border: 2px solid #1F1172;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9;
+            position: relative;
+        }
+
+        .pressBtn{
+            width: 104px;
+            height: 104px;
+            color: #FF00BA;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            background-color: #1F1172;
+            border-radius: 50%;
+            border: 2px solid #1F1172;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .pressBtn:hover{
+            background-color: #22299B;
+        }
+
+        .hand{
+            position: absolute;
+            z-index: 20;
+        }
+
+        .pointer{
+            position: absolute;
+            top: -45px;
+            left: 46px;
+        }
+
+        .diamondSolid{
+            width: 35px;
+            height: 35px;
+            background-color: #FF22EE;
+            border: 2px solid #1F1172;
+            transform: rotate(45deg) skew(15deg, 15deg);
+            position: absolute;
+            top: 30px;
+        }
+
+        .diamondHole{
+            width: 15px;
+            height: 15px;
+            transform: rotate(45deg) skew(15deg, 15deg);
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 10px solid #1F1172;
+            box-sizing: initial;
+        }
+
+        .diamondHole::after{
+            content: "";
+            width: 20px;
+            height: 20px;
+            border: 5px solid #FF00BA;
+            position: absolute;
+            box-sizing: initial;
+        
+        }
+
+        .diamondPointer{
+            width: 16px;
+            height: 16px;
+            background-color: #9F40FF;
+            border: 2px solid #1F1172;
+            transform: rotate(45deg) skew(15deg, 15deg);
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        .diamondPointer div{
+            width: 10px;
+            height: 10px;
+            background-color: #fff;
+            border: 2px solid #1f1172;
+            border-radius: 50%;
+            transform: rotate(0deg) skew(-15deg, -15deg);
+            position: absolute;
+            top: -17px;
+            left: -17px;
+            z-index: 4;
+        }
+        .diamondPointer div::after{
+            content: "";
+            width: 2px;
+            height: 19px;
+            background-color: #1F1172;
+            transform: rotate(-45deg) skew(0deg, 0deg);
+            position: absolute;
+            top: 2px;
+            left: 10px;
+            z-index: 15;
+        }
+
+        .pieWrap{
+            position: absolute;
+            top: -3px;
+            left: -3px;
+        }
+
+        .pie{
+            width: 500px;
+            height: 500px;
+            border: 2px solid #1f1172;
+            border-radius: 250px;
+            overflow: hidden;
+            clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(-30deg);
+            position: absolute;
+        }
+        .pieInner{
+            width: 250px;
+            height: 500px;
+            background: #F0BEFF;
+            transform-origin: right center;
+            transform: rotate(60deg); 
+        }
+
+        .pick{
+            color: #fff;
+            transition: all 2s ease 2s;
+        }
+
+        .wheelContain{
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+        }
+
+
+        .contain{
+            height: 250px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 15px 0;
+            transform-origin: 50% 100%;
+            position: absolute;
+            z-index: 16;
+        }
+
+
+        .contain i{
+            color: #343BAA;
+            font-size: 64px;
+        }
+        .contain p{
+            color: #343BAA;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .contain span{
+            color: #343BAA;
+            font-size: 20px;
+            line-height: 25px;
+            padding: 0 5px;
+            border-radius: 25%;
+        }
+
+
+        .prizeBar{
+            width: 100%;
+            position: relative;
+            position: absolute;
+            top: 50%;
+            background-color: #343BAA;
+            opacity: 0;
+        }
+
+        .active{
+            opacity: 1;
+            transition: all 1s ease 2s;
+        }
+
+        .text{
+            color: #fff;
+            font-size: 72px;
+            padding: 40px 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text p:first-child{
+            width: 182px;
+        }
+
+
+        .text div p:first-child{
+            width: 250px;
+            font-size: 32px;
+        }
+
+        .text div p:nth-child(2){
+            color: #ff00ba;
+            text-decoration: underline;
+        }
+
+        .iconWrap{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+        }
+
+        .iconWrap i{
+            color: #22299B;
+            font-size: 64px;
+        }
+
+        .iconWrap i:first-child{
+            position: absolute;
+            top: 20.24px;
+            left: 27.34px;
+            transform: rotate(30deg);
+        }
+
+        .iconWrap i:nth-child(2){
+            position: absolute;
+            top: 121.45px;
+            left: -30px;
+            transform: rotate(30deg);
+        }
+
+        .iconWrap i:nth-child(3){
+            position: absolute;
+            bottom: -10px;
+            left: 118.29px;
+            transform: rotate(30deg);
+        }
+        .iconWrap i:nth-child(4){
+            position: absolute;
+            top: -10px;
+            left: 302.16px;
+            transform: rotate(-30deg);
+        }
+
+        .iconWrap i:nth-child(5){
+            position: absolute;
+            top: 168px;
+            left: 349.67px;
+            transform: rotate(0deg);
+        }
+        .iconWrap i:nth-child(6){
+            position: absolute;
+            top: -20px;
+            right: 269.67px;
+            transform: rotate(0deg);
+        }
+
+        .iconWrap i:nth-child(7){
+            position: absolute;
+            bottom: -25px;
+            right: 249.23px;
+            transform: rotate(30deg);
+        }
+        .iconWrap i:nth-child(8){
+            position: absolute;
+            top: 137.23px;
+            right: 56.45px;
+            transform: rotate(-30deg);
+        }
+        .iconWrap i:nth-child(9){
+            position: absolute;
+            top: 24.41px;
+            right: -25px;
+            transform: rotate(30deg);
+        }
+    </style>
+    </head>
+    <body>
+        <header>
+            <button class="to2017">2017</button>
+            <button class="to2018">2018</button>
+        </header>
+        <main>
+            <div class="wheel">
+                <div class="decoration"></div>
+                <div class="wheelInner">
+                    <div class="wheelPie">
+                    <div class="pieWrap"></div>
+                    </div>
+                    <div class="wheelContain"></div>
+                </div>
+                <div class="hand">
+                    <div class="pointer">
+                    <div class="diamondHole"></div>
+                    <div class="diamondSolid"></div>
+                    <div class="diamondPointer">
+                        <div></div>
+                    </div>
+                    </div>
+                    <div class="pressBtnOuter">
+                    <div class="pressBtn">PRESS</div>
+                    </div>
+                </div>
+            </div>
+            <div class="prizeBar">
+                <div class="text">
+                    <p>WELL DONE!</p>
+                    <div>
+                        <p>YOU GET A FREE...</p>
+                        <p class="prize">Child!</p>
+                    </div>
+                </div>
+                <div class="iconWrap"></div>
+            </div>
+        </main>
+
+        <script>
+            const decoration = document.querySelector('.decoration')
+            const pieWrap = document.querySelector('.pieWrap')
+            const wheelContain = document.querySelector('.wheelContain')
+            const to2017 = document.querySelector('.to2017')
+            const to2018 = document.querySelector('.to2018')
+            const hand = document.querySelector('.hand')
+            const pressBtn = document.querySelector('.pressBtn')
+            const prize = document.querySelector('.prize')
+            const prizeBar = document.querySelector('.prizeBar')
+            const iconWrap = document.querySelector('.iconWrap')
+
+
+            const gift2017 = [
+            {
+                "name": "Movie",
+                "text": "movie_filter",
+                "total": 3,
+            },
+            {
+                "name": "Wish",
+                "text": "cake",
+                "total": 3,
+            },
+            {
+                "name": "Anything",
+                "text": "star",
+                "total": 1,
+            },
+            {
+                "name": "Child",
+                "text": "child_care",
+                "total": 1,
+            },
+            {
+                "name": "Flight",
+                "text": "flight",
+                "total": 1,
+            },
+            {
+                "name": "Wifi",
+                "text": "wifi",
+                "total": 2,
+            }
+            ]
+            const gift2018 = [
+                {
+                "id": 1,
+                "total": 1
+                },
+                {
+                "id": 2,
+                "total": 1
+                
+                },
+                {
+                "id": 3,
+                "total": 1
+                },
+                {
+                "id": 4,
+                "total": 1
+                },
+                {
+                "id": 5,
+                "total": 1
+                },
+                {
+                "id": 6,
+                "total": 1
+                },
+                {
+                "id": 7,
+                "total": 1
+                },
+                {
+                "id": 8,
+                "total": 1
+                },
+                {
+                "id": 9,
+                "total": 1
+                },
+                {
+                "id": 10,
+                "total": 1
+                },
+                {
+                "id": 11,
+                "total": 1
+                },
+                {
+                "id": 12,
+                "total": 1
+                },
+                {
+                "id": 13,
+                "total": 1
+                },
+                {
+                "total": 1,
+                "id": 14
+                },
+                {
+                "id": 15,
+                "total": 1
+                },
+                {
+                "id": 16,
+                "total": 1
+                },
+                {
+                "id": 17,
+                "total": 5
+                },
+                {
+                "id": 18,
+                "total": 10
+                },
+                {
+                "id": 19,
+                "total": 20
+                },
+                {
+                "id": 20,
+                "total": 69
+                }
+            ]
+
+            let giftData = gift2017;
+
+            let giftNum;
+            let pieInnerAngle;
+            let pieAngle;
+            let startAngle;
+            let gift
+            let lotteryCount = 1;
+            let year = 2017;
+            let pick;
+
+            //設置轉盤周圍星星、圓點
+            let createDecoration = () =>{
+            let itemAngle = pieInnerAngle
+            for(i=0;i<giftData.length;i++){
+                let item = document.createElement('div')
+                item.classList.add('decorationItem')
+                item.style.transform = `rotate(${itemAngle}deg)`
+                item.innerHTML = `
+                <div class="star"></div>
+                <div class="dot"></div>
+                `
+                itemAngle += 360/(giftData.length)
+                decoration.appendChild(item)
+            }
+            }
+
+            //設置轉盤、轉盤所需變數
+            let wheelCreate = () =>{
+            giftNum = giftData.length
+            pieInnerAngle = 360/(giftData.length)
+            pieAngle = -(pieInnerAngle/2)
+            startAngle = 0
+            pieWrap.innerHTML = ``
+            wheelContain.innerHTML = ``
+            decoration.innerHTML = ``
+            createDecoration()
+            pieCreate()
+            containCreate()
+            }
+
+            //依據資料數量製作扇形、並設置顏色交錯
+            let pieCreate = () =>{
+            for(i=0;i<giftData.length;i++){
+                let pie = document.createElement("div")
+                let pieInner = document.createElement("div")
+                pie.classList.add('pie')
+                pieInner.classList.add('pieInner')
+                pie.style.transform = `rotate(${pieAngle}deg)`;
+                pieInner.style.transform = `rotate(${pieInnerAngle}deg)`;
+                if(giftData.length == 0){
+                return
+                }
+                if(giftData.length == 1){
+                pieInner.style.width = `500px`
+                pie.style.clipPath = `none`
+                }
+                if((i % 2 == 0) & (i == giftData.length - 1) & ( i != 0)){ 
+                pieInner.style.background = `#5858B9`
+                }else if(i % 2 == 0){
+                pieInner.style.background = `#F0BEFF`
+                }else{
+                pieInner.style.background = `#343BAA`
+                }
+                pie.appendChild(pieInner)
+                pieWrap.appendChild(pie)
+                pieAngle += 360/(giftData.length)
+            }
+            }
+
+            //設置轉盤文字、Icon內容與顏色
+            let containCreate = () =>{
+            let containAngle = 0
+            for (i=0;i<giftData.length;i++){
+                let contain = document.createElement('div')
+                let icon = document.createElement('i')
+                let p = document.createElement('p')
+                let span = document.createElement('span')
+                contain.classList.add('contain')
+                icon.classList.add(`material-icons`)
+                if(year == 2017){
+                icon.innerHTML = `${giftData[i].text}`;
+                p.innerHTML = `${giftData[i].name}`
+                span.innerHTML = `${giftData[i].total}`
+                contain.style.padding = `15px 0`
+                contain.appendChild(icon)
+                }else if(year == 2018){
+                p.innerHTML = `${giftData[i].id}`
+                span.innerHTML = `${giftData[i].total}`
+                contain.style.padding = `30px 0`
+                }
+                contain.appendChild(p)
+                contain.appendChild(span)
+                if((i % 2 == 0) & (i == giftData.length - 1) & ( i != 0)){
+                icon.style.color = `#fff`
+                p.style.color = `#fff`
+                span.style.color = `#fff`
+                }else if(i % 2 == 0){
+                icon.style.color = `#343BAA`
+                p.style.color = `#343BAA`
+                span.style.backgroundColor = `#343BAA`
+                span.style.color = `#F0BEFF`
+                }else{
+                icon.style.color = `#F0BEFF`
+                p.style.color = `#F0BEFF`
+                span.style.backgroundColor = `#F0BEFF`
+                span.style.color = `#343BAA`
+                }
+                containAngle = 360/(giftData.length) * i
+                contain.style.transform = `rotate(${containAngle}deg)`
+                wheelContain.appendChild(contain)
+            }
+            }
+
+            //利用隨機變數抽獎，抽獎後更新資料且每次抽獎前依據上一次抽獎剩餘獎項更新輪盤內容
+            let lottery = () =>{
+            if(giftData.length == 0){
+                alert('獎項已全數抽完')
+                return
+            }
+            prizeBar.classList.remove('active')
+            iconWrap.innerHTML = ``
+            wheelCreate()
+            gift = parseInt(Math.random()*giftData.length)
+            giftData[gift].total -= 1
+            let handAngle = gift * pieInnerAngle - startAngle % 360 + (360 * 5 * lotteryCount)
+            hand.style.transform = `rotate(${handAngle}deg)`
+            hand.style.transition = `all 2000ms ease 0s`
+            startAngle = handAngle
+            lotteryCount += 1
+            if(year == 2017){
+                prize.innerHTML = `${giftData[gift].name}`
+            }else{
+                prize.innerHTML = `${giftData[gift].id}`
+            }
+            getPrize()
+            pieSetUp()
+
+            }
+
+            //抽到的獎項，扇形變色並出現得獎訊息
+            let getPrize = () =>{
+            let pieInner = document.querySelectorAll('.pieInner')
+            let p = document.querySelectorAll('.contain p')
+            let icon;
+            let active;
+            if(year == 2017){
+                icon = document.querySelectorAll('.contain i')
+                prizeBarIcon(icon[gift])
+            }
+            for(i=0;i<pieInner.length;i++){
+                if(year == 2017){
+                icon[i].classList.remove('pick')
+                }
+                pieInner[i].classList.remove('pick')
+                p[i].classList.remove('pick')
+            }
+            setTimeout(function(){
+                if(year ==2017){
+                icon[gift].classList.add('pick')
+                }
+                pieInner[gift].classList.add('pick')  
+                p[gift].classList.add('pick')
+                pick = document.querySelectorAll('.pick')
+                for(i=0;i<pick.length;i++){
+                pick[i].style.color = `#fff`
+                pick[i].style.backgroundColor = `#FF00BA`
+                }
+            })
+            prizeBar.classList.remove('active')
+            setTimeout(function(){
+                prizeBar.classList.add('active')
+            }, 100)
+            }
+
+            //設置得獎訊息的Icon圖案
+            let prizeBarIcon = (gifticon) =>{
+            if(year == 2017){
+                for(i=0;i<9;i++){
+                let icon = document.createElement('i')
+                icon.classList.add(`${gifticon.className}`)
+                icon.innerHTML = gifticon.innerHTML
+                iconWrap.appendChild(icon)
+                }
+            }else{
+                iconWrap.innerHTML = ``
+            }
+            }
+
+            //如果獎品數量等於零，刪除資料中此獎品的資訊
+            let pieSetUp = () =>{
+            if(giftData[gift].total == 0){
+                giftData.splice(gift, 1)
+            }
+            }
+
+            //2017版本時，設置2017按鈕為#22299B，並將資料存為2017之獎品資訊
+            let reset2017 = () =>{
+            //以深層複製將獎品資訊複製到giftData，避免因物件傳參考的特性修改到原始資料
+            giftData = JSON.parse(JSON.stringify(gift2017));  
+            year = 2017;
+            to2017.style.backgroundColor = `#22299B`
+            to2018.style.backgroundColor = `#FF00BA`
+            reset()
+            }
+
+            //2018版本時，設置2018按鈕為#22299B，並將資料存為2018之獎品資訊
+            let reset2018 = () =>{
+            giftData = JSON.parse(JSON.stringify(gift2018));  
+            year = 2018
+            to2017.style.backgroundColor = `#FF00BA`
+            to2018.style.backgroundColor = `#22299B`
+            reset()
+            }
+
+            //將指針轉回0度、變數存為初始值、得獎訊息消失
+            let reset = () =>{
+            lotteryCount = 1;
+            hand.style.transform = `rotate(0deg)`
+            hand.style.transition = `none`
+            prizeBar.classList.remove('active');
+            wheelCreate();
+            }
+
+
+            wheelCreate();
+
+            to2017.addEventListener('click', reset2017)
+            to2018.addEventListener('click', reset2018)
+            pressBtn.addEventListener('click', lottery)
+        </script>
+    </body>
+</html>
+
+
+

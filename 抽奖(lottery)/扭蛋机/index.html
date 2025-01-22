@@ -1,0 +1,290 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="apple-touch-fullscreen" content="YES" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta http-equiv="Expires" content="-1" />
+<meta http-equiv="pragram" content="no-cache" />
+
+<link href="css/style.css" type="text/css" rel="stylesheet">
+
+<title>快乐扭蛋机</title>
+<!--移动端版本兼容 -->
+<script type="text/javascript">
+    var phoneWidth =  parseInt(window.screen.width);
+    var phoneScale = phoneWidth/640;
+    var ua = navigator.userAgent;
+    if (/Android (\d+\.\d+)/.test(ua)){
+        var version = parseFloat(RegExp.$1);
+        // andriod 2.3
+        if(version>2.3){
+            document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+        // andriod 2.3以上
+        }else{
+            document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+        }
+        // 其他系统
+    } else {
+        document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+    }
+    //微信去掉下方刷新栏
+    if(RegExp("MicroMessenger").test(navigator.userAgent)){
+        document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+            WeixinJSBridge.call('hideToolbar');
+        });
+    }
+</script>
+
+    <script src="js/jquery1.8.3.min.js"></script>
+
+</head>
+<body>
+<div class="header_title">
+	<div>快乐扭蛋机</div>
+</div>
+<div class="niu_danji">
+	<!--机器-->
+	<div class="game_qu">
+    	<!--go-->
+        <div class="game_go">无限次数</div>
+         <div class="wdjifen"></div>
+    </div>
+    
+    <!--球-->
+    <div class="dan_gund">
+        <span  class="qiu_1 diaol_1"></span>
+        <span  class="qiu_2 diaol_2"> </span>
+        <span  class="qiu_3 diaol_3"></span>
+        
+        <span  class="qiu_4 diaol_4"></span>
+        <span  class="qiu_5 diaol_5"></span>
+        <span  class="qiu_6 diaol_6"></span>>
+        
+        <span  class="qiu_7 diaol_7"></span>
+        <span  class="qiu_8 diaol_8"></span>
+        
+        
+        <span  class="qiu_9 diaol_9"></span>
+        <span  class="qiu_10 diaol_10"></span> 
+        <span  class="qiu_11 diaol_11"></span>   
+               
+    </div>
+
+     <!--中奖掉落-->
+   <div class="medon"><img src="images/mendong.png"></div>
+   <div class="zjdl ">
+   		<span></span>
+   </div>
+    
+   </div>
+
+
+
+
+<!--中奖 获得一等奖-->
+<div class="zonj_zezc none" id="jianpin_one">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="images/close.png"></em>
+        <h2>
+        	<span id="jianpin_name"></span>
+        </h2>
+    </div></div>
+
+<!--没有中奖-->
+<div class="zonj_zezc none" id="jianpin_kong">
+	<div class="jpzs aiqiyi tc_anima">
+    	<em><img src="images/close.png"></em>
+        <h2>
+        	咦？没有抽中？
+        </h2>
+    </div>
+</div>
+
+<script>
+	
+$(document).ready(function(e) {
+	//一等奖 关闭
+	$("#jianpin_one em img").click(function(){
+		$("#jianpin_one").hide();
+		}
+	);		
+	//二等奖 关闭
+	$("#jianpin_two em img").click(function(){
+		$("#jianpin_two").hide();
+		}
+	);		
+	//三等奖 关闭
+	$("#jianpin_three em img").click(function(){
+		$("#jianpin_three").hide();
+		}
+	);			
+	//没有中奖 关闭
+	$("#jianpin_kong em img").click(function(){
+		$("#jianpin_kong").hide();
+		}
+	);
+
+var score='无限';
+$(".wdjifen").html(score);
+
+
+$(".game_go").click(function(){
+	draw()
+});
+
+var jiangpin = [
+	'未中奖',
+	'打小玲',
+	'打小刘',
+	'一起在热闹的街头拥吻',
+	'一起穿情侣装手牵手并肩而行',
+	'一起看夕阳日落',
+	'一起逛街',
+	'一起嬉戏打闹，像个小孩儿',
+	'一起去超市买菜做饭',
+	'一起去旅行',
+	'一起去爬山',
+	'晚饭后手牵手一起散步',
+	'一起去海边',
+	'雨天，一起在雨中狂奔',
+	'一起在雨天同撑一把伞',
+	'清晨，一起在山顶看日出',
+	'一起赏月数星星',
+	'一起对着流星许愿',
+	'一起看电影',
+	'一起吃火锅',
+	'一起去游乐场玩一整天',
+	'一起去鬼屋，你会紧紧护着胆小的我',
+	'一起放烟花',
+	'一起刷牙，对着镜子搞怪',
+	'一起挤公交车，互相拥护着对方',
+	'一起去图书馆看书，安静呆个一下午',
+	'一起宅在家里，你玩游戏我追剧',
+	'一起养只小狗或小猫，并为它起个可爱的名字',
+	'一起拍合照',
+	'一起在朋友圈发对方的照片并附上深情告白',
+	'一起去看一场爱豆的演唱会',
+	'一起去潜水',
+	'一起洗衣服',
+	'一起坐在阳台，晒着太阳，磕着瓜子，聊着天',
+	'一起喝同一杯饮料',
+	'一起吃同一个冰淇淋',
+	'一起去对方的小学，初中，高中，大学',
+	'一起在雪地行走，奔跑，大笑',
+	'一起打雪仗，堆雪人',
+	'一起喝酒，醉了也没关系',
+	'一起参加朋友的婚礼',
+	'一起跨年，祝对方新年快乐',
+	'一起用一副耳机听对方喜欢的歌',
+	'一起坐摩天轮，在最高点亲吻对方',
+	'一起度过我们的生日',
+	'一起在商场夹娃娃',
+	'一起骑单车',
+	'一起放一盏孔明灯，许下彼此心愿',
+	'一起去果园摘水果',
+	'一起打扫房间',
+	'一起荡秋千',
+	'一起通宵打游戏',
+	'一起蹦极',
+	'道早安，说晚安',
+	'早上醒来给对方甜蜜一吻',
+	'情人节给对方惊喜',
+	'纪念日精心准备礼物',
+	'经常夸赞对方',
+	'大方介绍彼此给各自朋友认识',
+	'你为他剃一次胡子或剪一次头发，多丑都不在意',
+	'他为你梳头发认真画一次眉，手法生疏也没关系',
+	'冬天把冰凉的手揣在他的衣兜里面',
+	'背着你走一段路，明明有些吃力却说一点也不重',
+	'为对方拍照',
+	'异地吵架第二天他突然出现在你家楼下',
+	'为对方哭过',
+	'安静靠在对方的肩膀上睡着',
+	'用情侣头像',
+	'为对方唱一首歌，哪怕走音跑调',
+	'夜晚一起相拥入睡',
+	' 把头压在对方身上玩手机',
+	'不开心时哄对方开心',
+	'生病时，悉心照料，不离不',
+	'为对方改掉自己的一个缺点',
+	'为对方做一次早餐',
+	'以自己的审美为对方挑选一套衣服',
+	'打电话说想念',
+	'异地时，想起对方都会莫名嘴角上扬',
+	'为对方拒绝一切暧昧',
+	'人群中紧握彼此双手',
+	'了解对方习惯，包容彼此缺点',
+	'突然从背后拥抱住对方',
+	'分享彼此的小秘密',
+	'看到有趣新闻第一时间分享给对方',
+	'讲自己小时候的趣事',
+	'伤心时候陪在身边',
+	'在车站分别前紧紧相拥',
+	'为对方考虑，在乎彼此感受',
+	'尽力为对方做一件自己不擅长的事情',
+	'为对方学做一道他爱吃的菜',
+	'夏天用勺子同吃一个西瓜',
+	'带你去童年居住的地方走一遭，更好的了解他的成长环境',
+	'在耳边低声旖旎"我爱你"',
+	'饭后一起洗碗',
+	'试穿彼此的衣服，惹得对方大笑',
+	'雨天接对方下班',
+	'专心为彼此做一件事情，哪怕很小的事',
+	'一起坐过山车，吓的尖叫，但因你在身边仍旧感到温暖',
+	'一起成为更好的自己',
+	'珍惜并感恩对方的付出',
+	'一起去见彼此的家长',
+	'一起计划我们的为来',
+	'一起白头偕老'
+	]
+
+function draw(){
+	var number =Math.floor( jiangpin.length * Math.random() + 1);
+
+	for(i=1;i<=11;i++){
+			$(".qiu_"+i).removeClass("diaol_"+i);
+			$(".qiu_"+i).addClass("wieyi_"+i);
+		};
+			
+	setTimeout(function (){
+		for(i=1;i<=11;i++){
+		$(".qiu_"+i).removeClass("wieyi_"+i);
+		}
+	},1100);	
+	setTimeout(function(){
+		switch(number % 4){
+			case 1:$(".zjdl").children("span").addClass("diaL_one");break;
+			case 2:$(".zjdl").children("span").addClass("diaL_two");break;
+			case 3:$(".zjdl").children("span").addClass("diaL_three");break;
+			case 0:$(".zjdl").children("span").addClass("diaL_four");break;
+		}
+		$(".zjdl").removeClass("none").addClass("dila_Y");
+				setTimeout(function (){
+					// 出奖品
+				for (var i = 0; i < jiangpin.length; i++ ) {
+					if (number == i) {
+						$("#jianpin_one").show();
+						$("#jianpin_name").text(jiangpin[number])
+					}
+				}
+			},900);
+		},1100)
+	
+	//取消动画
+	setTimeout(function (){
+			$(".zjdl").addClass("none").removeClass("dila_Y");
+			// $(".wdjifen").html(score);
+			$(".zjdl").children("span").removeAttr('class');
+			
+		},2500)
+	}	
+});
+
+</script>
+
+
+</body>
+</html>

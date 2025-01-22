@@ -1,0 +1,34 @@
+body, html{
+    height: 100%;
+}
+.content{
+    position: relative;
+    height: 100%;
+    background: #f2f2f2;
+    overflow: hidden;
+}
+.content .yudi{
+    position: absolute;
+    opacity: 0;
+    animation: drops 1.2s cubic-bezier(0.43, 0.01, 0.2, 0.43)  infinite; /*动画效果*/
+    /*红包样式*/
+    width: 60px;
+    height: 60px;
+    background: url(./hb.png) no-repeat;/*红包小图片可到iconfont.cn下载*/
+    background-size: auto 60px;
+}
+@keyframes drops{
+    0%{
+        opacity: 0;
+    }
+    20%{
+        opacity: 1;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+        transform: translate3d(10px,100vh,-10px);
+    }
+}

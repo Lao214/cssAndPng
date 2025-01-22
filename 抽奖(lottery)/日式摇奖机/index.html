@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+        height: 100%;
+        margin: 0;
+        }
+
+        #inputfield {
+        float: left;
+        margin-left: 20px;
+        }
+
+        #field {
+        height: 492px;
+        width: 500px;
+        border-bottom: 3px black groove;
+        position: relative;
+        float: left
+        }
+
+        #butfield {
+        height: 300px;
+        }
+
+        #hitfield {
+        height: 200px;
+        position: relative;
+        }
+
+        #hit {
+        position: absolute;
+        margin-left: 250px;
+        font-size:20px;
+        }
+
+        #but {
+        font-size: large;
+        background-color: rgb(164, 205, 209);
+        border-radius: 10px;
+        position: absolute;
+        top: 20px;
+        margin-left: 40%;
+        cursor: pointer
+        
+        }
+
+        /* 出た名前の一覧 */
+        #listfield {
+        position: absolute;
+        top: 100%;
+        }
+
+        #namelist {
+        display: flex;
+        flex-wrap: wrap;
+        list-style: none;
+        width: 80%;
+        }
+
+        #namelist li{
+        background-color: rgb(149, 8, 250);
+        color: rgb(255,255,255);
+        font-size:20px;
+        border-radius: 10px;
+        margin: 4px;
+        }
+
+
+
+        /*ガチャガチャの描画 */
+
+        #cvs {
+        opacity: 0.5;
+        top: -854px;
+        position: relative;
+        }
+
+        #cvs2 {
+        opacity: 1;
+        top: -1280px;
+        position: relative;
+        }
+
+        #cvs3 {
+        opacity: 1;
+        top: -420px;
+        position: relative;
+        }
+
+        #rotate {
+        border: 3px solid darkslategray;
+        border-radius: 4px;
+        width: 20px;
+        height: 80px;
+        background-color: rgb(226, 226, 226);
+        top: 320px;
+        left: 410px;
+        position: relative
+        }
+    </style>
+</head>
+<body>
+    <link rel="stylesheet" href="prese.css">
+    <div id="inputfield" ;>
+    <p>
+        名前を入力してください。<br>
+        ※改行で次の項目になります。
+    </p>
+    <textarea id="name" ; cols="20" ; rows="20"></textarea>
+    </div>
+
+    <div id="field">
+    <div id="butfield">
+        <button id="but" ; type="button" ;>開始 Nextガチャ!</button>
+    </div>
+    <div id="hitfield">
+        <div id="hit">
+        </div>
+    </div>
+    <div id="listfield">
+        <ul id="namelist"></ul>
+    </div>
+    <canvas id="cvs3" width="500" height="420"></canvas>
+    <canvas id="cvs" width="500" height="420"></canvas>
+    <canvas id="cvs2" width="500" height="420"></canvas>
+    </div>
+    <div id="rotate"></div>
+    <script src="prese.js"></script>
+
+    <script>
+        //名前が出て落ちる動き
+        function animate(options) {
+        let start = performance.now();
+        requestAnimationFrame(function animate(time) {
+            let timeFraction = (time - start) / options.duration;
+            if (timeFraction > 1) timeFraction = 1;
+            let progress = options.timing(timeFraction)
+            options.draw(progress);
+            if (timeFraction < 1) {
+            requestAnimationFrame(animate);
+            }
+        });
+        }
+        //増幅カーブを反転する用
+        function makeEaseOut(timing) {
+        return function (timeFraction) {
+            return 1 - timing(1 - timeFraction);
+        }
+        }
+        //バウンドするカーブ作成
+        function bounce(timeFraction) {
+        for (let a = 0, b = 1; 1; a += b, b /= 2) {
+            if (timeFraction >= (7 - 4 * a) / 11) {
+            return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+            }
+        }
+        }
+        //横軸移動用
+        function quad(timeFraction) {
+        return Math.pow(timeFraction, 2);
+        }
+
+        //名前のリスト化
+        let nameArr;
+        function defaultList() {
+        //下に表示するリストの初期化
+        const nameList = document.getElementById("namelist");
+        while (nameList.firstChild) {
+            nameList.removeChild(nameList.firstChild);
+        }
+        //テキストエリアから名前を取得して配列に入れる
+        const allName = document.getElementById('name').value;
+        return nameArr = (allName.split(/\n/)).filter(Boolean);
+        }
+        //テキストエリアに変化があった時のイベントリスナー
+        let text = document.getElementById("name")
+        text.addEventListener("change", defaultList)
+
+        //ボタンクリック後の動作
+        const but = document.getElementById("but");
+        but.addEventListener("click", Lottery);
+
+        function Lottery() {
+        if (nameArr === undefined) {
+            alert("名前を入力してね！")
+        } else if (nameArr.length === 0) {
+            let resetFlg = window.confirm("もう一度最初からガチャりますか？");
+            if (resetFlg) {
+            const nameList = document.getElementById("namelist");
+            while (nameList.firstChild) {
+                nameList.removeChild(nameList.firstChild);
+            }
+            defaultList();
+            Lottery();
+            }
+        } else {
+            //配列からくじ引き
+            let indexNum = Math.floor(Math.random() * nameArr.length);
+            document.getElementById("hit").innerText = nameArr[indexNum];
+            nameArr.splice(indexNum, 1);
+            //ハンドル回転処理
+            document.getElementById("rotate").animate(
+            [{ transform: "rotate(0deg)" },
+            { transform: "rotate(180deg)" }
+            ],
+            {duration: 1000}
+            );
+            //中身ぶるぶる
+            document.getElementById("cvs3").animate(
+            [ { offset:0.00,transform:"translate(0,0)"},
+                { offset: 0.05,transform:"translate(-2%,0)"},
+                { offset: 0.10,transform:"translate(2%,0)"},
+                { offset: 0.15,transform:"translate(-2%,-1%)"},
+                { offset: 0.20,transform:"translate(2%,1%)"},
+                { offset: 0.25,transform:"translate(-2%,-1%)"},
+                { offset: 0.30,transform:"translate(0,0)"},
+                { offset: 1.00,transform:"translate(0,0)"},
+            ],
+            {duration:1000}
+            );
+        　　//落下用の処理
+            let height = hitfield.clientHeight - hit.clientHeight;
+            let width = 150;
+            animate({
+            duration: 2000,
+            timing: makeEaseOut(bounce),
+            draw: function (progress) {
+                hitfield.style.top = height * progress + "px"
+            }
+            });
+            animate({
+            duration: 2000,
+            timing: makeEaseOut(quad),
+            draw: function (progress) {
+                hitfield.style.left = width * progress + "px"
+            }
+            });
+            const nameList = document.getElementById("namelist");
+            const liName = document.createElement("li")
+
+            liName.innerText = document.getElementById("hit").innerText
+            nameList.appendChild(liName);
+        }
+        }
+
+        //ガチャガチャ中身
+        const cvs3= document.getElementById("cvs3");
+        const ctx3 = cvs3.getContext("2d");
+        //球体の描画
+        ctx3.beginPath();
+        ctx3.arc(180 , 150, 30, 0, Math.PI * 2, false);
+        ctx3.fillStyle = "greenyellow"
+        ctx3.fill();
+        ctx3.beginPath();
+        ctx3.arc(130 , 180, 30, 0, Math.PI * 2, false);
+        ctx3.fillStyle = "cornflowerblue"
+        ctx3.fill();
+        ctx3.beginPath();
+        ctx3.arc(210 , 190, 30, 0, Math.PI * 2, false);
+        ctx3.fillStyle = "hotpink"
+        ctx3.fill();
+        ctx3.beginPath();
+        ctx3.arc(160 , 210, 30, 0, Math.PI * 2, false);
+        ctx3.fillStyle = "red"
+        ctx3.fill();
+        ctx3.beginPath();
+        ctx3.arc(240 , 160, 30, 0, Math.PI * 2, false);
+        ctx3.fillStyle = "mediumturquoise"
+        ctx3.fill();
+        //ガチャガチャの描画
+        const cvs = document.getElementById("cvs");
+        const ctx = cvs.getContext("2d");
+        //球体のグラデーション設定
+        const grad = ctx.createRadialGradient(230,100, 20, 200, 150, 100)
+        grad.addColorStop(0, "white");
+        grad.addColorStop(0.6, "gray");
+        grad.addColorStop(1, "black");
+        ctx.fillStyle = grad;
+        //球体の描画
+        ctx.beginPath();
+        ctx.arc(180 , 150, 100, 0, Math.PI * 2, false);
+        ctx.fill();
+        //土台
+        const cvs2 = document.getElementById("cvs2");
+        const ctx2 = cvs2.getContext("2d");
+        //足
+        const grad2 = ctx2.createLinearGradient(80, 210, 130, 210);
+        grad2.addColorStop(0, "darkslategray");
+        grad2.addColorStop(0.3, "gray");
+        grad2.addColorStop(1, "gray");
+        ctx2.fillStyle = grad2
+        ctx2.strokeStyle = "darkslategray"
+
+        ctx2.beginPath();
+        ctx2.moveTo(80 ,320 );
+        ctx2.lineTo(130,320);
+        ctx2.lineTo(130,420);
+        ctx2.lineTo(80,420);
+        ctx2.lineTo(80 ,320);
+        ctx2.fill();
+        ctx2.lineWidth = 3;
+        ctx2.stroke()
+        const grad3 = ctx2.createLinearGradient(230, 210, 280, 210);
+        grad3.addColorStop(0, "darkslategray");
+        grad3.addColorStop(0.3, "gray");
+        grad3.addColorStop(1, "gray");
+        ctx2.fillStyle = grad3
+        ctx2.strokeStyle = "darkslategray"
+
+        ctx2.beginPath();
+        ctx2.moveTo(230 ,320 );
+        ctx2.lineTo(280,320);
+        ctx2.lineTo(280,420);
+        ctx2.lineTo(230,420);
+        ctx2.lineTo(230 ,320);
+        ctx2.fill();
+        ctx2.lineWidth = 3;
+        ctx2.stroke()
+        //台形のグラデーション
+        const grad4 = ctx2.createLinearGradient(100, 210, 300, 210);
+        grad4.addColorStop(0, "darkred");
+        grad4.addColorStop(0.2, "red");
+        grad4.addColorStop(0.5, "red");
+        grad4.addColorStop(0.9, "red");
+        grad4.addColorStop(1, "darkred");
+        ctx2.fillStyle = grad4
+        ctx2.strokeStyle = "darkslategray"
+        //円の枠
+        ctx2.beginPath();
+        ctx2.arc(180 , 150, 100, 0, Math.PI * 2, false);
+        ctx2.lineWidth = 3;
+        ctx2.stroke()
+        //台形の描画
+        ctx2.beginPath();
+        ctx2.moveTo(100 ,210 );
+        ctx2.lineTo(260,210);
+        ctx2.lineTo(280,230);
+        ctx2.lineTo(280,350);
+        ctx2.lineTo(80 ,350);
+        ctx2.lineTo(80,230);
+        ctx2.lineTo(100,210);
+        // ctx2.fillStyle = "rgba(" +[255,255,0,1] + ")";
+        ctx2.fill();
+        ctx2.lineWidth = 3;
+        ctx2.stroke()
+    </script>
+</body>
+</html>
